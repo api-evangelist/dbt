@@ -4,8 +4,8 @@ apis:
   - aid: dbt:dbt
     name: Dbt
     tags:
-      - Projects
       - Data
+      - Projects
     humanURL: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
     properties:
       - url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
@@ -18,8 +18,8 @@ apis:
       to gain a better understanding of your DAG and the data it produces.
 name: Dbt
 tags:
-  - Projects
   - Data
+  - Projects
 type: Contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
