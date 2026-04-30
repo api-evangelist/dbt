@@ -1,0 +1,40 @@
+extends:
+  - spectral:oas
+rules:
+  dbt-info-contact:
+    description: API info should include a dbt Labs contact.
+    given: $.info
+    severity: warn
+    then:
+      field: contact
+      function: truthy
+  dbt-cloud-base-url:
+    description: Servers should reference cloud.getdbt.com.
+    given: $.servers[*].url
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: "cloud\\.getdbt\\.com"
+  dbt-bearer-auth:
+    description: API should declare a bearer token security scheme.
+    given: $.components.securitySchemes
+    severity: error
+    then:
+      field: bearerAuth
+      function: truthy
+  dbt-account-scoped-paths:
+    description: Resource paths should be scoped under /accounts/{accountId}.
+    given: $.paths
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: "/accounts/"
+  dbt-operation-tags:
+    description: Operations should be tagged Accounts, Projects, Jobs, Runs, or Environments.
+    given: $.paths[*][*]
+    severity: warn
+    then:
+      field: tags
+      function: truthy

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.github.io/dbt/json-schema/dbt-run.json",
+  "title": "dbt Cloud Run",
+  "description": "A single execution of a dbt Cloud job, including status and timing details.",
+  "type": "object",
+  "properties": {
+    "id": {"type": "integer"},
+    "account_id": {"type": "integer"},
+    "project_id": {"type": "integer"},
+    "job_id": {"type": "integer"},
+    "environment_id": {"type": "integer"},
+    "status": {"type": "integer", "description": "Run status (1=queued, 2=starting, 3=running, 10=success, 20=error, 30=cancelled)"},
+    "git_branch": {"type": "string"},
+    "git_sha": {"type": "string"},
+    "trigger": {"type": "object"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "started_at": {"type": "string", "format": "date-time"},
+    "finished_at": {"type": "string", "format": "date-time"},
+    "duration": {"type": "string"}
+  },
+  "required": ["id", "job_id", "status"]
+}

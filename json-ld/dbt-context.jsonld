@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://schema.getdbt.com/",
+    "schema": "https://schema.org/",
+    "dbt": "https://schema.getdbt.com/",
+    "Project": "dbt:Project",
+    "Job": "dbt:Job",
+    "Run": "dbt:Run",
+    "Environment": "dbt:Environment",
+    "Model": "dbt:Model",
+    "Source": "dbt:Source",
+    "id": {"@id": "schema:identifier"},
+    "name": {"@id": "schema:name", "@type": "schema:Text"},
+    "description": {"@id": "schema:description", "@type": "schema:Text"},
+    "status": {"@id": "dbt:status", "@type": "schema:Text"},
+    "started_at": {"@id": "schema:startTime", "@type": "schema:DateTime"},
+    "finished_at": {"@id": "schema:endTime", "@type": "schema:DateTime"},
+    "duration": {"@id": "schema:duration", "@type": "schema:Text"},
+    "git_branch": {"@id": "dbt:gitBranch", "@type": "schema:Text"},
+    "git_sha": {"@id": "dbt:gitSha", "@type": "schema:Text"},
+    "execute_steps": {"@id": "dbt:executeSteps"}
+  }
+}

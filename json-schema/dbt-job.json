@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.github.io/dbt/json-schema/dbt-job.json",
+  "title": "dbt Cloud Job",
+  "description": "A dbt Cloud job that executes a sequence of dbt commands on a schedule or trigger.",
+  "type": "object",
+  "properties": {
+    "id": {"type": "integer"},
+    "account_id": {"type": "integer"},
+    "project_id": {"type": "integer"},
+    "environment_id": {"type": "integer"},
+    "name": {"type": "string"},
+    "execute_steps": {"type": "array", "items": {"type": "string"}},
+    "dbt_version": {"type": "string"},
+    "triggers": {"type": "object"},
+    "schedule": {"type": "object"},
+    "state": {"type": "integer"},
+    "generate_docs": {"type": "boolean"},
+    "run_generate_sources": {"type": "boolean"}
+  },
+  "required": ["id", "account_id", "project_id", "name"]
+}

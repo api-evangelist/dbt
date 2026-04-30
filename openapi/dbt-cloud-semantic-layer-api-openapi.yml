@@ -1,0 +1,46 @@
+openapi: 3.1.0
+info:
+  title: dbt Cloud Semantic Layer API
+  description: >-
+    The dbt Cloud Semantic Layer API enables querying of metrics and
+    dimensions defined in MetricFlow. It is exposed via GraphQL, JDBC, and
+    a Python SDK so downstream BI and data tools can pull governed metric
+    values consistently.
+  version: "1.0"
+servers:
+  - url: https://semantic-layer.cloud.getdbt.com/api/graphql
+    description: Semantic Layer GraphQL endpoint
+tags:
+  - name: Metrics
+  - name: Dimensions
+paths:
+  /api/graphql:
+    post:
+      summary: Execute a Semantic Layer GraphQL query
+      operationId: executeSemanticQuery
+      tags:
+        - Metrics
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                variables:
+                  type: object
+      responses:
+        "200":
+          description: GraphQL response containing metric or dimension data.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Token
+security:
+  - bearerAuth: []

@@ -1,0 +1,33 @@
+name: dbt Cloud Vocabulary
+description: >-
+  Shared vocabulary of terms used across dbt Cloud's Administrative,
+  Discovery, and Semantic Layer APIs.
+terms:
+  - term: Account
+    definition: A dbt Cloud tenant that groups projects, users, and billing.
+  - term: Project
+    definition: A configured dbt project linked to a Git repository and warehouse.
+  - term: Environment
+    definition: >-
+      A named runtime configuration (development, staging, production) that
+      pairs a dbt version with warehouse credentials.
+  - term: Job
+    definition: A scheduled or triggered set of dbt commands to run in an environment.
+  - term: Run
+    definition: A single execution of a job, with status, logs, and artifacts.
+  - term: Artifact
+    definition: >-
+      An output of a dbt run such as manifest.json, catalog.json, or
+      run_results.json that describes models and execution results.
+  - term: Model
+    definition: A SELECT statement materialized as a table or view in a warehouse.
+  - term: Source
+    definition: A reference to a raw table loaded into the warehouse by another tool.
+  - term: Metric
+    definition: >-
+      A reusable, governed business measure defined with MetricFlow and
+      queried through the Semantic Layer.
+  - term: Dimension
+    definition: An attribute of a metric that allows slicing and grouping.
+  - term: DAG
+    definition: The directed acyclic graph of model dependencies in a dbt project.

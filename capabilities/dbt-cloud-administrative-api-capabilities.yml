@@ -1,0 +1,64 @@
+name: dbt Cloud Administrative API Capabilities
+description: >-
+  Capabilities exposed by the dbt Cloud Administrative API for managing
+  accounts, projects, jobs, runs, and environments.
+capabilities:
+  - name: List Accounts
+    description: Retrieve dbt Cloud accounts the caller has access to.
+    operationId: listAccounts
+    method: GET
+    path: /accounts/
+  - name: List Projects
+    description: List projects within an account.
+    operationId: listProjects
+    method: GET
+    path: /accounts/{accountId}/projects/
+  - name: Get Project
+    description: Retrieve a specific project's configuration.
+    operationId: getProject
+    method: GET
+    path: /accounts/{accountId}/projects/{projectId}/
+  - name: List Jobs
+    description: List jobs configured in an account.
+    operationId: listJobs
+    method: GET
+    path: /accounts/{accountId}/jobs/
+  - name: Create Job
+    description: Define a new job with dbt commands and a schedule.
+    operationId: createJob
+    method: POST
+    path: /accounts/{accountId}/jobs/
+  - name: Trigger Job Run
+    description: Trigger an immediate run of a job from external orchestration tools.
+    operationId: triggerJobRun
+    method: POST
+    path: /accounts/{accountId}/jobs/{jobId}/run/
+  - name: List Runs
+    description: List job runs across an account.
+    operationId: listRuns
+    method: GET
+    path: /accounts/{accountId}/runs/
+  - name: Get Run
+    description: Retrieve detailed status and timing for a single run.
+    operationId: getRun
+    method: GET
+    path: /accounts/{accountId}/runs/{runId}/
+  - name: List Run Artifacts
+    description: Download manifest, catalog, and run-result artifacts for a run.
+    operationId: listRunArtifacts
+    method: GET
+    path: /accounts/{accountId}/runs/{runId}/artifacts/
+  - name: List Environments
+    description: List environments configured in an account.
+    operationId: listEnvironments
+    method: GET
+    path: /accounts/{accountId}/environments/
+use_cases:
+  - name: External orchestration
+    description: Trigger dbt jobs from Airflow, Dagster, or Prefect via the trigger-run endpoint.
+  - name: CI/CD integration
+    description: Run dbt builds against PR branches and download run artifacts to assert quality gates.
+  - name: Observability and lineage
+    description: Pair Administrative API run data with Discovery API metadata for end-to-end lineage.
+  - name: Infrastructure as code
+    description: Manage projects, jobs, and environments through Terraform using the same Administrative API.
