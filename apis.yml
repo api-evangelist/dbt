@@ -115,6 +115,11 @@ common:
     url: json-ld/dbt-context.jsonld
   - type: Vocabulary
     url: vocabulary/dbt-vocabulary.yml
+  - type: Integrations
+    url: https://www.getdbt.com/partners
+integrations:
+  - name: dbt
+  - name: dbt Labs
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
