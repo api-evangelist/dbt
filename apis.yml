@@ -1,7 +1,7 @@
 aid: dbt
 name: dbt
 url: https://raw.githubusercontent.com/api-evangelist/dbt/refs/heads/main/apis.yml
-type: Contract
+kind: contract
 position: Consuming
 access: 3rd-Party
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
@@ -16,7 +16,7 @@ tags:
 created: '2025-01-08'
 modified: '2026-04-28'
 specificationVersion: '0.19'
-xType: company
+kind: company
 description: >-
   dbt Labs operates dbt Cloud, the managed platform for the open-source dbt
   (data build tool) used to transform data inside cloud warehouses. dbt Cloud
@@ -107,11 +107,11 @@ common:
     url: https://github.com/dbt-labs/dbt-core
   - type: SDK
     url: https://docs.getdbt.com/docs/dbt-cloud-apis/sl-python
-  - type: Terms of Service
+  - type: TermsOfService
     url: https://www.getdbt.com/cloud/terms
-  - type: Privacy Policy
+  - type: PrivacyPolicy
     url: https://www.getdbt.com/cloud/privacy-policy
-  - type: JSON-LD
+  - type: JSONLD
     url: json-ld/dbt-context.jsonld
   - type: Vocabulary
     url: vocabulary/dbt-vocabulary.yml
