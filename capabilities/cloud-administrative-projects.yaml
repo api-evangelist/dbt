@@ -1,0 +1,126 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: dbt Cloud Administrative API — Projects
+  description: 'dbt Cloud Administrative API — Projects. 2 operations. Lead operation: List projects in an account. Self-contained
+    Naftiko capability covering one Dbt business surface.'
+  tags:
+  - Dbt
+  - Projects
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    DBT_API_KEY: DBT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cloud-administrative-projects
+    baseUri: https://cloud.getdbt.com/api/v3
+    description: dbt Cloud Administrative API — Projects business capability. Self-contained, no shared references.
+    resources:
+    - name: accounts-accountId-projects
+      path: /accounts/{accountId}/projects/
+      operations:
+      - name: listprojects
+        method: GET
+        description: List projects in an account
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountId
+          in: path
+          type: integer
+          required: true
+    - name: accounts-accountId-projects-projectId
+      path: /accounts/{accountId}/projects/{projectId}/
+      operations:
+      - name: getproject
+        method: GET
+        description: Get a project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountId
+          in: path
+          type: integer
+          required: true
+        - name: projectId
+          in: path
+          type: integer
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.DBT_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: cloud-administrative-projects-rest
+    port: 8080
+    description: REST adapter for dbt Cloud Administrative API — Projects. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/accounts/{accountid}/projects
+      name: accounts-accountid-projects
+      description: REST surface for accounts-accountId-projects.
+      operations:
+      - method: GET
+        name: listprojects
+        description: List projects in an account
+        call: cloud-administrative-projects.listprojects
+        with:
+          accountId: rest.accountId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/accounts/{accountid}/projects/{projectid}
+      name: accounts-accountid-projects-projectid
+      description: REST surface for accounts-accountId-projects-projectId.
+      operations:
+      - method: GET
+        name: getproject
+        description: Get a project
+        call: cloud-administrative-projects.getproject
+        with:
+          accountId: rest.accountId
+          projectId: rest.projectId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cloud-administrative-projects-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for dbt Cloud Administrative API — Projects. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-projects-account
+      description: List projects in an account
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cloud-administrative-projects.listprojects
+      with:
+        accountId: tools.accountId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-project
+      description: Get a project
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cloud-administrative-projects.getproject
+      with:
+        accountId: tools.accountId
+        projectId: tools.projectId
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: dbt Cloud Discovery API — Metadata
+  description: 'dbt Cloud Discovery API — Metadata. 1 operations. Lead operation: Execute a Discovery API GraphQL query. Self-contained
+    Naftiko capability covering one Dbt business surface.'
+  tags:
+  - Dbt
+  - Metadata
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    DBT_API_KEY: DBT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cloud-discovery-metadata
+    baseUri: https://metadata.cloud.getdbt.com/graphql
+    description: dbt Cloud Discovery API — Metadata business capability. Self-contained, no shared references.
+    resources:
+    - name: graphql
+      path: /graphql
+      operations:
+      - name: executediscoveryquery
+        method: POST
+        description: Execute a Discovery API GraphQL query
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.DBT_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: cloud-discovery-metadata-rest
+    port: 8080
+    description: REST adapter for dbt Cloud Discovery API — Metadata. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/graphql
+      name: graphql
+      description: REST surface for graphql.
+      operations:
+      - method: POST
+        name: executediscoveryquery
+        description: Execute a Discovery API GraphQL query
+        call: cloud-discovery-metadata.executediscoveryquery
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cloud-discovery-metadata-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for dbt Cloud Discovery API — Metadata. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: execute-discovery-api-graphql-query
+      description: Execute a Discovery API GraphQL query
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: cloud-discovery-metadata.executediscoveryquery
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
