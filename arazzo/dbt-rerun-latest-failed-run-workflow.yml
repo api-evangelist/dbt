@@ -1,0 +1,98 @@
+arazzo: 1.0.1
+info:
+  title: dbt Cloud Re-run the Latest Failed Run
+  summary: Inspect the most recent run, and if it failed, re-trigger its job.
+  description: >-
+    A self-healing pattern for scheduled pipelines. The workflow reads the most
+    recent run in the account, branches on whether that run errored (status 20),
+    and when it did, triggers a fresh run of the same job to recover. When the
+    latest run did not fail the workflow simply ends. Every step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: dbtAdminApi
+  url: ../openapi/dbt-cloud-administrative-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: rerun-latest-failed-run
+  summary: Re-trigger the job of the latest run only when that run errored.
+  description: >-
+    Lists runs to find the newest one, reads its status and job id, and if the
+    status is 20 (error) triggers a new run of the same job.
+  inputs:
+    type: object
+    required:
+    - accountId
+    - token
+    properties:
+      accountId:
+        type: integer
+        description: The dbt Cloud account id.
+      token:
+        type: string
+        description: The dbt Cloud service token (sent as Authorization Bearer Token).
+      cause:
+        type: string
+        description: A human-readable reason for the recovery run.
+        default: Automatic re-run of failed run
+  steps:
+  - stepId: listRuns
+    description: >-
+      List runs for the account; the first entry is treated as the most recent
+      run. Run status codes are 1 (queued), 2 (starting), 3 (running),
+      10 (success), 20 (error) and 30 (cancelled).
+    operationId: listRuns
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      latestRunId: $response.body#/data/0/id
+      latestStatus: $response.body#/data/0/status
+      latestJobId: $response.body#/data/0/job_definition_id
+    onSuccess:
+    - name: latestFailed
+      type: goto
+      stepId: rerunJob
+      criteria:
+      - context: $response.body
+        condition: $.data[0].status == 20
+        type: jsonpath
+    - name: latestOk
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data[0].status != 20
+        type: jsonpath
+  - stepId: rerunJob
+    description: >-
+      Trigger a fresh run of the job whose latest run errored.
+    operationId: triggerJobRun
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    - name: jobId
+      in: path
+      value: $steps.listRuns.outputs.latestJobId
+    requestBody:
+      contentType: application/json
+      payload:
+        cause: $inputs.cause
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      newRunId: $response.body#/data/id
+      status: $response.body#/data/status
+  outputs:
+    failedRunId: $steps.listRuns.outputs.latestRunId
+    newRunId: $steps.rerunJob.outputs.newRunId

@@ -1,0 +1,108 @@
+arazzo: 1.0.1
+info:
+  title: dbt Cloud Run Completion to Metadata Discovery
+  summary: Confirm a run succeeded, then query the Discovery API for the models it produced.
+  description: >-
+    Bridges the Administrative API and the Discovery API. The workflow reads a
+    run and confirms it reached the terminal success status (status code 10),
+    then issues a GraphQL query to the Discovery API to pull model metadata for
+    the run's environment. This is the standard pattern for hydrating a metadata
+    catalog after a successful dbt build. Every step spells out its request
+    inline so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: dbtAdminApi
+  url: ../openapi/dbt-cloud-administrative-api-openapi.yml
+  type: openapi
+- name: dbtDiscoveryApi
+  url: ../openapi/dbt-cloud-discovery-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: run-metadata-discovery
+  summary: After a successful run, query the Discovery API for its environment's models.
+  description: >-
+    Reads the run; if status is 10 (success) it runs a Discovery API GraphQL
+    query for the run's environment id to retrieve produced model metadata.
+  inputs:
+    type: object
+    required:
+    - accountId
+    - runId
+    - token
+    properties:
+      accountId:
+        type: integer
+        description: The dbt Cloud account id.
+      runId:
+        type: integer
+        description: The id of the run to confirm and trace metadata for.
+      token:
+        type: string
+        description: The dbt Cloud service token (sent as Authorization Bearer Token).
+  steps:
+  - stepId: getRun
+    description: >-
+      Read the run and confirm it succeeded. Status 10 indicates the run
+      completed successfully and its metadata is available in the Discovery API.
+    operationId: getRun
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    - name: runId
+      in: path
+      value: $inputs.runId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/status
+      environmentId: $response.body#/data/environment_id
+    onSuccess:
+    - name: succeeded
+      type: goto
+      stepId: queryMetadata
+      criteria:
+      - context: $response.body
+        condition: $.data.status == 10
+        type: jsonpath
+    - name: notSucceeded
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.status != 10
+        type: jsonpath
+  - stepId: queryMetadata
+    description: >-
+      Query the Discovery API for the models in the run's environment using a
+      GraphQL query whose environmentId variable is bound to the run's
+      environment id.
+    operationId: executeDiscoveryQuery
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    requestBody:
+      contentType: application/json
+      payload:
+        query: >-
+          query Models($environmentId: BigInt!) {
+            environment(id: $environmentId) {
+              applied {
+                models(first: 100) { edges { node { name uniqueId materializedType } } }
+              }
+            }
+          }
+        variables:
+          environmentId: $steps.getRun.outputs.environmentId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      models: $response.body#/data/environment/applied/models
+  outputs:
+    runStatus: $steps.getRun.outputs.status
+    environmentId: $steps.getRun.outputs.environmentId
+    models: $steps.queryMetadata.outputs.models

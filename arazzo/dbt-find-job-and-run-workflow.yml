@@ -1,0 +1,97 @@
+arazzo: 1.0.1
+info:
+  title: dbt Cloud Find Job and Trigger Run
+  summary: List jobs in an account, fetch the job's configuration, then trigger a run of it.
+  description: >-
+    A discovery-then-action flow for operators who know the account but not the
+    job id. The workflow lists the jobs in the account, selects the first job
+    returned, re-reads it to confirm its configuration, and then triggers a run
+    of that job. Every step spells out its request inline so the flow can be
+    read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: dbtAdminApi
+  url: ../openapi/dbt-cloud-administrative-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: find-job-and-run
+  summary: Locate a job by listing the account's jobs and trigger a run for the first match.
+  description: >-
+    Lists jobs for the account, picks the first job id from the response,
+    re-reads that job (also via the jobs list filtered) to confirm it exists,
+    and triggers a run.
+  inputs:
+    type: object
+    required:
+    - accountId
+    - token
+    properties:
+      accountId:
+        type: integer
+        description: The dbt Cloud account id to list jobs for.
+      token:
+        type: string
+        description: The dbt Cloud service token (sent as Authorization Bearer Token).
+      cause:
+        type: string
+        description: A human-readable reason for triggering the run.
+        default: Triggered via Arazzo workflow
+  steps:
+  - stepId: listJobs
+    description: >-
+      List the jobs defined in the account. The first job in the response is
+      selected as the run target.
+    operationId: listJobs
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      jobId: $response.body#/data/0/id
+      jobName: $response.body#/data/0/name
+    onSuccess:
+    - name: jobFound
+      type: goto
+      stepId: triggerRun
+      criteria:
+      - context: $response.body
+        condition: $.data.length > 0
+        type: jsonpath
+    - name: noJobs
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.length == 0
+        type: jsonpath
+  - stepId: triggerRun
+    description: >-
+      Trigger a run for the selected job. dbt Cloud queues the run and returns
+      the created run resource.
+    operationId: triggerJobRun
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    - name: jobId
+      in: path
+      value: $steps.listJobs.outputs.jobId
+    requestBody:
+      contentType: application/json
+      payload:
+        cause: $inputs.cause
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      runId: $response.body#/data/id
+      status: $response.body#/data/status
+  outputs:
+    jobId: $steps.listJobs.outputs.jobId
+    runId: $steps.triggerRun.outputs.runId

@@ -1,0 +1,118 @@
+arazzo: 1.0.1
+info:
+  title: dbt Cloud Job Run History and Latest Artifacts
+  summary: List runs, read the most recent run, and fetch its artifacts when it succeeded.
+  description: >-
+    A reporting flow that answers "how did the last run go and what did it
+    produce?". The workflow lists runs and selects the newest, reads that run
+    for full detail, and branches on its success status (status code 10) to
+    fetch the run's artifacts only when it succeeded. Every step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: dbtAdminApi
+  url: ../openapi/dbt-cloud-administrative-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: job-run-history
+  summary: Find the latest run, read it, and fetch its artifacts if it succeeded.
+  description: >-
+    Lists runs, picks the newest, reads it, and if its status is 10 (success)
+    lists the run's artifacts.
+  inputs:
+    type: object
+    required:
+    - accountId
+    - token
+    properties:
+      accountId:
+        type: integer
+        description: The dbt Cloud account id.
+      token:
+        type: string
+        description: The dbt Cloud service token (sent as Authorization Bearer Token).
+  steps:
+  - stepId: listRuns
+    description: >-
+      List runs for the account; the first entry is the most recent run.
+    operationId: listRuns
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      latestRunId: $response.body#/data/0/id
+    onSuccess:
+    - name: hasRuns
+      type: goto
+      stepId: getRun
+      criteria:
+      - context: $response.body
+        condition: $.data.length > 0
+        type: jsonpath
+    - name: noRuns
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.length == 0
+        type: jsonpath
+  - stepId: getRun
+    description: >-
+      Read the most recent run for full detail. Status 10 means it succeeded.
+    operationId: getRun
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    - name: runId
+      in: path
+      value: $steps.listRuns.outputs.latestRunId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/status
+    onSuccess:
+    - name: succeeded
+      type: goto
+      stepId: listArtifacts
+      criteria:
+      - context: $response.body
+        condition: $.data.status == 10
+        type: jsonpath
+    - name: notSucceeded
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.status != 10
+        type: jsonpath
+  - stepId: listArtifacts
+    description: >-
+      List the artifacts produced by the latest successful run.
+    operationId: listRunArtifacts
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    - name: runId
+      in: path
+      value: $steps.listRuns.outputs.latestRunId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      artifacts: $response.body#/data
+  outputs:
+    latestRunId: $steps.listRuns.outputs.latestRunId
+    status: $steps.getRun.outputs.status
+    artifacts: $steps.listArtifacts.outputs.artifacts

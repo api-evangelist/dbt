@@ -1,0 +1,95 @@
+arazzo: 1.0.1
+info:
+  title: dbt Cloud Get Run and Fetch Its Artifacts
+  summary: Read a run, branch on whether it succeeded, and list its artifacts only on success.
+  description: >-
+    A guarded artifact retrieval flow. The workflow reads a known run, branches
+    on the terminal success status (status code 10), and only when the run
+    succeeded does it list the produced artifacts. This avoids attempting to
+    pull artifacts for runs that are still in flight or that failed. Every step
+    spells out its request inline so the flow can be read and executed without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: dbtAdminApi
+  url: ../openapi/dbt-cloud-administrative-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: run-and-fetch-artifacts
+  summary: List artifacts for a run only when the run reports status 10 (success).
+  description: >-
+    Reads the run, and if status is 10 (success) lists its artifacts; otherwise
+    ends without fetching artifacts.
+  inputs:
+    type: object
+    required:
+    - accountId
+    - runId
+    - token
+    properties:
+      accountId:
+        type: integer
+        description: The dbt Cloud account id.
+      runId:
+        type: integer
+        description: The id of the run to inspect.
+      token:
+        type: string
+        description: The dbt Cloud service token (sent as Authorization Bearer Token).
+  steps:
+  - stepId: getRun
+    description: >-
+      Read the run resource. Status 10 means the run succeeded and produced
+      artifacts; any other status means artifacts should not be fetched.
+    operationId: getRun
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    - name: runId
+      in: path
+      value: $inputs.runId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/status
+      isComplete: $response.body#/data/is_complete
+    onSuccess:
+    - name: succeeded
+      type: goto
+      stepId: listArtifacts
+      criteria:
+      - context: $response.body
+        condition: $.data.status == 10
+        type: jsonpath
+    - name: notSucceeded
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.status != 10
+        type: jsonpath
+  - stepId: listArtifacts
+    description: >-
+      List the artifacts produced by the successful run (manifest.json,
+      catalog.json, run_results.json).
+    operationId: listRunArtifacts
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    - name: runId
+      in: path
+      value: $inputs.runId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      artifacts: $response.body#/data
+  outputs:
+    status: $steps.getRun.outputs.status
+    artifacts: $steps.listArtifacts.outputs.artifacts

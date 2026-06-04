@@ -1,0 +1,103 @@
+arazzo: 1.0.1
+info:
+  title: dbt Cloud Run Completion to Semantic Layer Metrics
+  summary: Confirm a run succeeded, then query the Semantic Layer API for available metrics.
+  description: >-
+    Bridges the Administrative API and the Semantic Layer API. The workflow
+    reads a run and confirms it reached the terminal success status (status code
+    10), then issues a GraphQL query to the Semantic Layer API for the run's
+    environment to list the metrics MetricFlow now exposes. This is the standard
+    pattern for refreshing a downstream BI metric catalog after a successful
+    build. Every step spells out its request inline so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: dbtAdminApi
+  url: ../openapi/dbt-cloud-administrative-api-openapi.yml
+  type: openapi
+- name: dbtSemanticLayerApi
+  url: ../openapi/dbt-cloud-semantic-layer-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: run-to-semantic-metrics
+  summary: After a successful run, query the Semantic Layer for its environment's metrics.
+  description: >-
+    Reads the run; if status is 10 (success) it runs a Semantic Layer GraphQL
+    query bound to the run's environment id to list available metrics.
+  inputs:
+    type: object
+    required:
+    - accountId
+    - runId
+    - token
+    properties:
+      accountId:
+        type: integer
+        description: The dbt Cloud account id.
+      runId:
+        type: integer
+        description: The id of the run to confirm before querying metrics.
+      token:
+        type: string
+        description: The dbt Cloud service token (sent as Authorization Bearer Token).
+  steps:
+  - stepId: getRun
+    description: >-
+      Read the run and confirm it succeeded. Status 10 means the build
+      completed and the Semantic Layer reflects the latest metric definitions.
+    operationId: getRun
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    - name: runId
+      in: path
+      value: $inputs.runId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/status
+      environmentId: $response.body#/data/environment_id
+    onSuccess:
+    - name: succeeded
+      type: goto
+      stepId: queryMetrics
+      criteria:
+      - context: $response.body
+        condition: $.data.status == 10
+        type: jsonpath
+    - name: notSucceeded
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.status != 10
+        type: jsonpath
+  - stepId: queryMetrics
+    description: >-
+      Query the Semantic Layer API for the metrics defined in the run's
+      environment, binding the environmentId variable to the run's environment.
+    operationId: executeSemanticQuery
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    requestBody:
+      contentType: application/json
+      payload:
+        query: >-
+          query Metrics($environmentId: BigInt!) {
+            metrics(environmentId: $environmentId) { name description type }
+          }
+        variables:
+          environmentId: $steps.getRun.outputs.environmentId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      metrics: $response.body#/data/metrics
+  outputs:
+    runStatus: $steps.getRun.outputs.status
+    environmentId: $steps.getRun.outputs.environmentId
+    metrics: $steps.queryMetrics.outputs.metrics

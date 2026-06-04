@@ -1,0 +1,111 @@
+arazzo: 1.0.1
+info:
+  title: dbt Cloud Account, Project and Job Inventory
+  summary: Walk from the first account to its projects to its jobs to build a hierarchy snapshot.
+  description: >-
+    A top-down discovery flow for mapping a dbt Cloud account. The workflow
+    lists accounts and selects the first one, lists that account's projects and
+    selects the first, reads that project for detail, and then lists the
+    account's jobs. The result is a compact inventory linking account, project
+    and jobs. Every step spells out its request inline so the flow can be read
+    and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: dbtAdminApi
+  url: ../openapi/dbt-cloud-administrative-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: account-project-job-inventory
+  summary: Build an account → project → jobs inventory starting from the first account.
+  description: >-
+    Lists accounts, picks the first account, lists its projects, reads the first
+    project, and lists the account's jobs.
+  inputs:
+    type: object
+    required:
+    - token
+    properties:
+      token:
+        type: string
+        description: The dbt Cloud service token (sent as Authorization Bearer Token).
+  steps:
+  - stepId: listAccounts
+    description: >-
+      List the accounts the token can access and select the first one.
+    operationId: listAccounts
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      accountId: $response.body#/data/0/id
+      accountName: $response.body#/data/0/name
+  - stepId: listProjects
+    description: >-
+      List the projects in the selected account and pick the first project.
+    operationId: listProjects
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $steps.listAccounts.outputs.accountId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      projectId: $response.body#/data/0/id
+    onSuccess:
+    - name: hasProjects
+      type: goto
+      stepId: getProject
+      criteria:
+      - context: $response.body
+        condition: $.data.length > 0
+        type: jsonpath
+    - name: noProjects
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.length == 0
+        type: jsonpath
+  - stepId: getProject
+    description: >-
+      Read the first project for full detail.
+    operationId: getProject
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $steps.listAccounts.outputs.accountId
+    - name: projectId
+      in: path
+      value: $steps.listProjects.outputs.projectId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      projectName: $response.body#/data/name
+  - stepId: listJobs
+    description: >-
+      List the jobs defined in the account to round out the inventory.
+    operationId: listJobs
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $steps.listAccounts.outputs.accountId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      jobs: $response.body#/data
+  outputs:
+    accountId: $steps.listAccounts.outputs.accountId
+    projectId: $steps.listProjects.outputs.projectId
+    projectName: $steps.getProject.outputs.projectName
+    jobs: $steps.listJobs.outputs.jobs

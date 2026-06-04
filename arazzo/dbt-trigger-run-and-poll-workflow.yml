@@ -1,0 +1,138 @@
+arazzo: 1.0.1
+info:
+  title: dbt Cloud Trigger Run and Poll to Completion
+  summary: Trigger a dbt Cloud job run, poll the run until it succeeds, then list its artifacts.
+  description: >-
+    The canonical dbt Cloud orchestration pattern. The workflow triggers a run
+    of an existing job, captures the new run id, then polls the run resource on
+    a loop until dbt Cloud reports the terminal success status (status code 10).
+    Once the run has succeeded it lists the run artifacts (manifest.json,
+    catalog.json, run_results.json) so downstream tooling can consume them.
+    Every step spells out its request inline so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: dbtAdminApi
+  url: ../openapi/dbt-cloud-administrative-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: trigger-run-and-poll
+  summary: Trigger a job run and poll it to a successful completion, then fetch artifacts.
+  description: >-
+    Triggers a run for the supplied job, then repeatedly fetches the run until
+    dbt Cloud reports status 10 (success). On success the run artifacts are
+    listed; on a terminal failure (status 20) or cancellation (status 30) the
+    workflow stops.
+  inputs:
+    type: object
+    required:
+    - accountId
+    - jobId
+    - token
+    properties:
+      accountId:
+        type: integer
+        description: The dbt Cloud account id that owns the job.
+      jobId:
+        type: integer
+        description: The id of the job to trigger a run for.
+      token:
+        type: string
+        description: The dbt Cloud service token (sent as Authorization Bearer Token).
+      cause:
+        type: string
+        description: A human-readable reason for triggering the run.
+        default: Triggered via Arazzo workflow
+  steps:
+  - stepId: triggerRun
+    description: >-
+      Trigger a new run of the supplied job. dbt Cloud queues the run and
+      returns the newly created run resource including its id and initial status.
+    operationId: triggerJobRun
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    - name: jobId
+      in: path
+      value: $inputs.jobId
+    requestBody:
+      contentType: application/json
+      payload:
+        cause: $inputs.cause
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      runId: $response.body#/data/id
+      initialStatus: $response.body#/data/status
+  - stepId: pollRun
+    description: >-
+      Fetch the run resource. dbt Cloud run status codes are 1 (queued),
+      2 (starting), 3 (running), 10 (success), 20 (error) and 30 (cancelled).
+      The step branches on the returned status: success advances to listing
+      artifacts, a terminal failure or cancellation ends the workflow, and any
+      non-terminal status loops back to poll again.
+    operationId: getRun
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    - name: runId
+      in: path
+      value: $steps.triggerRun.outputs.runId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/status
+      isComplete: $response.body#/data/is_complete
+      isError: $response.body#/data/is_error
+    onSuccess:
+    - name: runSucceeded
+      type: goto
+      stepId: listArtifacts
+      criteria:
+      - context: $response.body
+        condition: $.data.status == 10
+        type: jsonpath
+    - name: runFailed
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.status == 20 || $.data.status == 30
+        type: jsonpath
+    - name: keepPolling
+      type: goto
+      stepId: pollRun
+      criteria:
+      - context: $response.body
+        condition: $.data.status < 10
+        type: jsonpath
+  - stepId: listArtifacts
+    description: >-
+      List the artifacts produced by the successful run so downstream tools can
+      retrieve manifest.json, catalog.json and run_results.json.
+    operationId: listRunArtifacts
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    - name: runId
+      in: path
+      value: $steps.triggerRun.outputs.runId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      artifacts: $response.body#/data
+  outputs:
+    runId: $steps.triggerRun.outputs.runId
+    finalStatus: $steps.pollRun.outputs.status
+    artifacts: $steps.listArtifacts.outputs.artifacts

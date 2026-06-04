@@ -1,0 +1,167 @@
+arazzo: 1.0.1
+info:
+  title: dbt Cloud Create, Run, Poll and Collect Artifacts
+  summary: Create a job, trigger it, poll the run to success (status 10), and list artifacts.
+  description: >-
+    The full lifecycle in a single workflow. It creates a job in the supplied
+    project and environment, triggers the job's first run, polls the run on a
+    loop until dbt Cloud reports the terminal success status (status code 10),
+    and then lists the run's artifacts. Terminal failure (status 20) or
+    cancellation (status 30) ends the loop. Every step spells out its request
+    inline so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: dbtAdminApi
+  url: ../openapi/dbt-cloud-administrative-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-run-poll-artifacts
+  summary: Create a job, run it, poll to success, and collect its artifacts.
+  description: >-
+    Creates a job, triggers a run, polls getRun until status 10 (success),
+    failure (20) or cancellation (30), and on success lists the run artifacts.
+  inputs:
+    type: object
+    required:
+    - accountId
+    - projectId
+    - environmentId
+    - jobName
+    - executeSteps
+    - token
+    properties:
+      accountId:
+        type: integer
+        description: The dbt Cloud account id.
+      projectId:
+        type: integer
+        description: The project the new job belongs to.
+      environmentId:
+        type: integer
+        description: The environment the job runs in.
+      jobName:
+        type: string
+        description: A display name for the new job.
+      executeSteps:
+        type: array
+        description: The list of dbt commands the job runs.
+        items:
+          type: string
+      token:
+        type: string
+        description: The dbt Cloud service token (sent as Authorization Bearer Token).
+      cause:
+        type: string
+        description: A human-readable reason for the run.
+        default: Lifecycle run via Arazzo workflow
+  steps:
+  - stepId: createJob
+    description: >-
+      Create a job bound to the supplied project and environment.
+    operationId: createJob
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    requestBody:
+      contentType: application/json
+      payload:
+        account_id: $inputs.accountId
+        project_id: $inputs.projectId
+        environment_id: $inputs.environmentId
+        name: $inputs.jobName
+        execute_steps: $inputs.executeSteps
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      jobId: $response.body#/data/id
+  - stepId: triggerRun
+    description: >-
+      Trigger the first run of the newly created job.
+    operationId: triggerJobRun
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    - name: jobId
+      in: path
+      value: $steps.createJob.outputs.jobId
+    requestBody:
+      contentType: application/json
+      payload:
+        cause: $inputs.cause
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      runId: $response.body#/data/id
+  - stepId: pollRun
+    description: >-
+      Fetch the run. Status codes: 1 queued, 2 starting, 3 running, 10 success,
+      20 error, 30 cancelled. Success advances to artifacts, a terminal failure
+      or cancellation ends the workflow, and any non-terminal status loops back.
+    operationId: getRun
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    - name: runId
+      in: path
+      value: $steps.triggerRun.outputs.runId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/status
+    onSuccess:
+    - name: succeeded
+      type: goto
+      stepId: listArtifacts
+      criteria:
+      - context: $response.body
+        condition: $.data.status == 10
+        type: jsonpath
+    - name: failedOrCancelled
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.status == 20 || $.data.status == 30
+        type: jsonpath
+    - name: keepPolling
+      type: goto
+      stepId: pollRun
+      criteria:
+      - context: $response.body
+        condition: $.data.status < 10
+        type: jsonpath
+  - stepId: listArtifacts
+    description: >-
+      List the artifacts produced by the successful run.
+    operationId: listRunArtifacts
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    - name: runId
+      in: path
+      value: $steps.triggerRun.outputs.runId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      artifacts: $response.body#/data
+  outputs:
+    jobId: $steps.createJob.outputs.jobId
+    runId: $steps.triggerRun.outputs.runId
+    finalStatus: $steps.pollRun.outputs.status
+    artifacts: $steps.listArtifacts.outputs.artifacts

@@ -97,6 +97,48 @@ apis:
   - type: NaftikoCapability
     url: capabilities/cloud-semantic-layer-metrics.yaml
 common:
+- type: ArazzoWorkflows
+  url: arazzo/
+  workflows:
+  - url: arazzo/dbt-account-project-job-inventory-workflow.yml
+    name: dbt Cloud Account, Project and Job Inventory
+    summary: Walk from the first account to its projects to its jobs to build a hierarchy snapshot.
+  - url: arazzo/dbt-bootstrap-account-and-run-workflow.yml
+    name: dbt Cloud Bootstrap From Account to First Run
+    summary: Resolve account, project and environment, create a job, and trigger its first run.
+  - url: arazzo/dbt-create-job-and-run-workflow.yml
+    name: dbt Cloud Create Job and Run It
+    summary: Create a new job in a project environment, then immediately trigger a run of it.
+  - url: arazzo/dbt-create-run-poll-artifacts-workflow.yml
+    name: dbt Cloud Create, Run, Poll and Collect Artifacts
+    summary: Create a job, trigger it, poll the run to success (status 10), and list artifacts.
+  - url: arazzo/dbt-environment-job-run-workflow.yml
+    name: dbt Cloud Environment-Scoped Job Run
+    summary: Pick an environment, create a job in it, and trigger the job's first run.
+  - url: arazzo/dbt-find-job-and-run-workflow.yml
+    name: dbt Cloud Find Job and Trigger Run
+    summary: List jobs in an account, fetch the job's configuration, then trigger a run of it.
+  - url: arazzo/dbt-job-run-history-workflow.yml
+    name: dbt Cloud Job Run History and Latest Artifacts
+    summary: List runs, read the most recent run, and fetch its artifacts when it succeeded.
+  - url: arazzo/dbt-provision-job-in-environment-workflow.yml
+    name: dbt Cloud Provision a Job in a Project Environment
+    summary: Resolve a project and one of its environments, then create a job bound to both.
+  - url: arazzo/dbt-rerun-latest-failed-run-workflow.yml
+    name: dbt Cloud Re-run the Latest Failed Run
+    summary: Inspect the most recent run, and if it failed, re-trigger its job.
+  - url: arazzo/dbt-run-and-fetch-artifacts-workflow.yml
+    name: dbt Cloud Get Run and Fetch Its Artifacts
+    summary: Read a run, branch on whether it succeeded, and list its artifacts only on success.
+  - url: arazzo/dbt-run-metadata-discovery-workflow.yml
+    name: dbt Cloud Run Completion to Metadata Discovery
+    summary: Confirm a run succeeded, then query the Discovery API for the models it produced.
+  - url: arazzo/dbt-run-to-semantic-metrics-workflow.yml
+    name: dbt Cloud Run Completion to Semantic Layer Metrics
+    summary: Confirm a run succeeded, then query the Semantic Layer API for available metrics.
+  - url: arazzo/dbt-trigger-run-and-poll-workflow.yml
+    name: dbt Cloud Trigger Run and Poll to Completion
+    summary: Trigger a dbt Cloud job run, poll the run until it succeeds, then list its artifacts.
 - type: LinkedIn
   url: https://www.linkedin.com/company/dbtlabs
 - type: Website

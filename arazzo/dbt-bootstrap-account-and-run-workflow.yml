@@ -1,0 +1,167 @@
+arazzo: 1.0.1
+info:
+  title: dbt Cloud Bootstrap From Account to First Run
+  summary: Resolve account, project and environment, create a job, and trigger its first run.
+  description: >-
+    The end-to-end onboarding flow that takes a caller from nothing but a token
+    to a running job. The workflow lists accounts and selects the first, lists
+    that account's projects and selects the first, lists the account's
+    environments and selects the first, creates a job bound to that project and
+    environment, and triggers the job's first run. Every step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: dbtAdminApi
+  url: ../openapi/dbt-cloud-administrative-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: bootstrap-account-and-run
+  summary: From a token alone, resolve account/project/environment, create a job, and run it.
+  description: >-
+    Lists accounts (first), projects (first), environments (first), creates a
+    job in that project and environment, then triggers its first run.
+  inputs:
+    type: object
+    required:
+    - jobName
+    - executeSteps
+    - token
+    properties:
+      jobName:
+        type: string
+        description: A display name for the new job.
+      executeSteps:
+        type: array
+        description: The list of dbt commands the job runs.
+        items:
+          type: string
+      token:
+        type: string
+        description: The dbt Cloud service token (sent as Authorization Bearer Token).
+      cause:
+        type: string
+        description: A human-readable reason for the first run.
+        default: Bootstrap first run
+  steps:
+  - stepId: listAccounts
+    description: >-
+      List accounts and select the first one.
+    operationId: listAccounts
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      accountId: $response.body#/data/0/id
+  - stepId: listProjects
+    description: >-
+      List the selected account's projects and pick the first.
+    operationId: listProjects
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $steps.listAccounts.outputs.accountId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      projectId: $response.body#/data/0/id
+    onSuccess:
+    - name: hasProject
+      type: goto
+      stepId: listEnvironments
+      criteria:
+      - context: $response.body
+        condition: $.data.length > 0
+        type: jsonpath
+    - name: noProject
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.length == 0
+        type: jsonpath
+  - stepId: listEnvironments
+    description: >-
+      List the account's environments and pick the first.
+    operationId: listEnvironments
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $steps.listAccounts.outputs.accountId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      environmentId: $response.body#/data/0/id
+    onSuccess:
+    - name: hasEnvironment
+      type: goto
+      stepId: createJob
+      criteria:
+      - context: $response.body
+        condition: $.data.length > 0
+        type: jsonpath
+    - name: noEnvironment
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.length == 0
+        type: jsonpath
+  - stepId: createJob
+    description: >-
+      Create a job bound to the resolved project and environment.
+    operationId: createJob
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $steps.listAccounts.outputs.accountId
+    requestBody:
+      contentType: application/json
+      payload:
+        account_id: $steps.listAccounts.outputs.accountId
+        project_id: $steps.listProjects.outputs.projectId
+        environment_id: $steps.listEnvironments.outputs.environmentId
+        name: $inputs.jobName
+        execute_steps: $inputs.executeSteps
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      jobId: $response.body#/data/id
+  - stepId: triggerRun
+    description: >-
+      Trigger the first run of the newly created job.
+    operationId: triggerJobRun
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $steps.listAccounts.outputs.accountId
+    - name: jobId
+      in: path
+      value: $steps.createJob.outputs.jobId
+    requestBody:
+      contentType: application/json
+      payload:
+        cause: $inputs.cause
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      runId: $response.body#/data/id
+  outputs:
+    accountId: $steps.listAccounts.outputs.accountId
+    projectId: $steps.listProjects.outputs.projectId
+    environmentId: $steps.listEnvironments.outputs.environmentId
+    jobId: $steps.createJob.outputs.jobId
+    runId: $steps.triggerRun.outputs.runId

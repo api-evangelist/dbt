@@ -1,0 +1,126 @@
+arazzo: 1.0.1
+info:
+  title: dbt Cloud Create Job and Run It
+  summary: Create a new job in a project environment, then immediately trigger a run of it.
+  description: >-
+    Bootstraps a brand-new dbt Cloud job and exercises it in one pass. The
+    workflow confirms the target project exists, creates a job bound to that
+    project and an environment, and then triggers the first run of the newly
+    created job. Every step spells out its request inline so the flow can be
+    read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: dbtAdminApi
+  url: ../openapi/dbt-cloud-administrative-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-job-and-run
+  summary: Create a job in a project and trigger its first run.
+  description: >-
+    Reads the target project to confirm it exists, creates a job in that
+    project bound to the supplied environment, then triggers a run of the new
+    job using its returned id.
+  inputs:
+    type: object
+    required:
+    - accountId
+    - projectId
+    - environmentId
+    - jobName
+    - executeSteps
+    - token
+    properties:
+      accountId:
+        type: integer
+        description: The dbt Cloud account id.
+      projectId:
+        type: integer
+        description: The project the new job belongs to.
+      environmentId:
+        type: integer
+        description: The environment the job runs in.
+      jobName:
+        type: string
+        description: A display name for the new job.
+      executeSteps:
+        type: array
+        description: The list of dbt commands the job runs (e.g. ["dbt build"]).
+        items:
+          type: string
+      token:
+        type: string
+        description: The dbt Cloud service token (sent as Authorization Bearer Token).
+      cause:
+        type: string
+        description: A human-readable reason for the first run.
+        default: First run of newly created job
+  steps:
+  - stepId: confirmProject
+    description: >-
+      Read the target project to confirm it exists before creating a job
+      against it.
+    operationId: getProject
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      projectId: $response.body#/data/id
+  - stepId: createJob
+    description: >-
+      Create a job in the confirmed project, bound to the supplied environment
+      and execute steps. dbt Cloud returns the created job including its id.
+    operationId: createJob
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    requestBody:
+      contentType: application/json
+      payload:
+        account_id: $inputs.accountId
+        project_id: $steps.confirmProject.outputs.projectId
+        environment_id: $inputs.environmentId
+        name: $inputs.jobName
+        execute_steps: $inputs.executeSteps
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      jobId: $response.body#/data/id
+  - stepId: triggerRun
+    description: >-
+      Trigger the first run of the newly created job.
+    operationId: triggerJobRun
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    - name: jobId
+      in: path
+      value: $steps.createJob.outputs.jobId
+    requestBody:
+      contentType: application/json
+      payload:
+        cause: $inputs.cause
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      runId: $response.body#/data/id
+      status: $response.body#/data/status
+  outputs:
+    jobId: $steps.createJob.outputs.jobId
+    runId: $steps.triggerRun.outputs.runId

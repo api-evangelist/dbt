@@ -1,0 +1,130 @@
+arazzo: 1.0.1
+info:
+  title: dbt Cloud Environment-Scoped Job Run
+  summary: Pick an environment, create a job in it, and trigger the job's first run.
+  description: >-
+    Stands up and exercises a job for a specific environment in one pass. The
+    workflow lists the account's environments and selects the first, creates a
+    job bound to the supplied project and that environment, and then triggers
+    the job's first run. Every step spells out its request inline so the flow
+    can be read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: dbtAdminApi
+  url: ../openapi/dbt-cloud-administrative-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: environment-job-run
+  summary: Select an environment, create a job in it, and trigger that job.
+  description: >-
+    Lists environments and picks the first, creates a job in the supplied
+    project bound to that environment, then triggers a run of the new job.
+  inputs:
+    type: object
+    required:
+    - accountId
+    - projectId
+    - jobName
+    - executeSteps
+    - token
+    properties:
+      accountId:
+        type: integer
+        description: The dbt Cloud account id.
+      projectId:
+        type: integer
+        description: The project the new job belongs to.
+      jobName:
+        type: string
+        description: A display name for the new job.
+      executeSteps:
+        type: array
+        description: The list of dbt commands the job runs.
+        items:
+          type: string
+      token:
+        type: string
+        description: The dbt Cloud service token (sent as Authorization Bearer Token).
+      cause:
+        type: string
+        description: A human-readable reason for the run.
+        default: First run in environment
+  steps:
+  - stepId: listEnvironments
+    description: >-
+      List the account's environments and select the first one as the target.
+    operationId: listEnvironments
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      environmentId: $response.body#/data/0/id
+    onSuccess:
+    - name: hasEnvironment
+      type: goto
+      stepId: createJob
+      criteria:
+      - context: $response.body
+        condition: $.data.length > 0
+        type: jsonpath
+    - name: noEnvironment
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.length == 0
+        type: jsonpath
+  - stepId: createJob
+    description: >-
+      Create a job in the supplied project bound to the selected environment.
+    operationId: createJob
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    requestBody:
+      contentType: application/json
+      payload:
+        account_id: $inputs.accountId
+        project_id: $inputs.projectId
+        environment_id: $steps.listEnvironments.outputs.environmentId
+        name: $inputs.jobName
+        execute_steps: $inputs.executeSteps
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      jobId: $response.body#/data/id
+  - stepId: triggerRun
+    description: >-
+      Trigger the first run of the newly created job.
+    operationId: triggerJobRun
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.token
+    - name: accountId
+      in: path
+      value: $inputs.accountId
+    - name: jobId
+      in: path
+      value: $steps.createJob.outputs.jobId
+    requestBody:
+      contentType: application/json
+      payload:
+        cause: $inputs.cause
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      runId: $response.body#/data/id
+  outputs:
+    environmentId: $steps.listEnvironments.outputs.environmentId
+    jobId: $steps.createJob.outputs.jobId
+    runId: $steps.triggerRun.outputs.runId
