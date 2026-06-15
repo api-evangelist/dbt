@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "dbt Cloud Semantic Layer API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metrics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute a Semantic Layer GraphQL query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://semantic-layer.cloud.getdbt.com/api/graphql/api/graphql",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute a Semantic Layer GraphQL query"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

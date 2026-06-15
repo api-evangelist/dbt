@@ -1,0 +1,137 @@
+{
+  "info": {
+    "_postman_id": "42965900-4b99-4021-85e6-ec65f51264bc",
+    "name": "dbt Cloud Semantic Layer API",
+    "description": "The dbt Cloud Semantic Layer API enables querying of metrics and dimensions defined in MetricFlow. It is exposed via GraphQL, JDBC, and a Python SDK so downstream BI and data tools can pull governed metric values consistently.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:07:31.000Z",
+    "updatedAt": "2026-06-05T15:07:32.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-42965900-4b99-4021-85e6-ec65f51264bc"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "graphql",
+          "item": [
+            {
+              "name": "Execute a Semantic Layer GraphQL query",
+              "id": "cdb7125d-922d-474f-b2ec-aece9acb2938",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/graphql",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "graphql"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "bb42e8bd-37ba-47a1-b0d0-81c9f28e44de",
+                  "name": "GraphQL response containing metric or dimension data.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {}\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/graphql",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "graphql"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:07:32.000Z",
+                  "updatedAt": "2026-06-05T15:07:32.000Z",
+                  "uid": "35240-bb42e8bd-37ba-47a1-b0d0-81c9f28e44de"
+                }
+              ],
+              "createdAt": "2026-06-05T15:07:32.000Z",
+              "updatedAt": "2026-06-05T15:07:32.000Z",
+              "uid": "35240-cdb7125d-922d-474f-b2ec-aece9acb2938"
+            }
+          ],
+          "id": "4b17d51a-fd38-4b90-962d-e7d837ca765c",
+          "createdAt": "2026-06-05T15:07:32.000Z",
+          "updatedAt": "2026-06-05T15:07:32.000Z",
+          "uid": "35240-4b17d51a-fd38-4b90-962d-e7d837ca765c"
+        }
+      ],
+      "id": "b4770036-8264-4531-866e-8047648243e5",
+      "createdAt": "2026-06-05T15:07:32.000Z",
+      "updatedAt": "2026-06-05T15:07:32.000Z",
+      "uid": "35240-b4770036-8264-4531-866e-8047648243e5"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://semantic-layer.cloud.getdbt.com/api/graphql"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "dbt Cloud Discovery API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute a Discovery API GraphQL query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://metadata.cloud.getdbt.com/graphql/graphql",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute a Discovery API GraphQL query"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

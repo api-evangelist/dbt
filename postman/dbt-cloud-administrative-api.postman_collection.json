@@ -1,0 +1,930 @@
+{
+  "info": {
+    "_postman_id": "3278e4cc-64c3-4d95-a24f-2ec47a71708a",
+    "name": "dbt Cloud Administrative API",
+    "description": "The dbt Cloud Administrative API enables programmatic management of dbt Cloud accounts, projects, jobs, runs, environments, and other resources. The API supports automation of dbt Cloud workflows and integration with external orchestration tools.\n\nContact Support:\n Name: dbt Labs Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:07:28.000Z",
+    "updatedAt": "2026-06-05T15:07:29.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-3278e4cc-64c3-4d95-a24f-2ec47a71708a"
+  },
+  "item": [
+    {
+      "name": "accounts",
+      "item": [
+        {
+          "name": "{accountId}",
+          "item": [
+            {
+              "name": "projects",
+              "item": [
+                {
+                  "name": "{projectId}",
+                  "item": [
+                    {
+                      "name": "Get a project",
+                      "id": "af8ab20e-66cb-45bc-9a7f-c835fc3078c0",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:accountId/projects/:projectId/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":accountId",
+                            "projects",
+                            ":projectId",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "id": "0fdcdcd5-0af9-42e3-86ca-bf1f8cf58014",
+                              "key": "accountId",
+                              "value": "<integer>",
+                              "description": "(Required) "
+                            },
+                            {
+                              "id": "495f2199-ee18-45be-81d5-ef9739ee15b4",
+                              "key": "projectId",
+                              "value": "<integer>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "cee29b28-bf56-46f9-a597-1eb0f96d4288",
+                          "name": "A project resource.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/accounts/:accountId/projects/:projectId/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "accounts",
+                                ":accountId",
+                                "projects",
+                                ":projectId",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "key": "accountId"
+                                },
+                                {
+                                  "key": "projectId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-06-05T15:07:29.000Z",
+                          "updatedAt": "2026-06-05T15:07:29.000Z",
+                          "uid": "35240-cee29b28-bf56-46f9-a597-1eb0f96d4288"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:07:29.000Z",
+                      "updatedAt": "2026-06-05T15:07:29.000Z",
+                      "uid": "35240-af8ab20e-66cb-45bc-9a7f-c835fc3078c0"
+                    }
+                  ],
+                  "id": "0b096cc0-4c8a-4423-9abb-b689f34a7198",
+                  "createdAt": "2026-06-05T15:07:29.000Z",
+                  "updatedAt": "2026-06-05T15:07:29.000Z",
+                  "uid": "35240-0b096cc0-4c8a-4423-9abb-b689f34a7198"
+                },
+                {
+                  "name": "List projects in an account",
+                  "id": "50ffd24b-74dd-40bb-a628-97dafd0b54d5",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:accountId/projects/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":accountId",
+                        "projects",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "id": "a1ae5456-78af-4b3c-8d1b-1f640274c691",
+                          "key": "accountId",
+                          "value": "<integer>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "eca477d0-c02c-492e-938b-38bbeaae4e92",
+                      "name": "A list of projects.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:accountId/projects/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":accountId",
+                            "projects",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "accountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-06-05T15:07:29.000Z",
+                      "updatedAt": "2026-06-05T15:07:29.000Z",
+                      "uid": "35240-eca477d0-c02c-492e-938b-38bbeaae4e92"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:07:29.000Z",
+                  "updatedAt": "2026-06-05T15:07:29.000Z",
+                  "uid": "35240-50ffd24b-74dd-40bb-a628-97dafd0b54d5"
+                }
+              ],
+              "id": "ba8916bb-5dc2-4c6e-810e-263bd46a2b57",
+              "createdAt": "2026-06-05T15:07:29.000Z",
+              "updatedAt": "2026-06-05T15:07:29.000Z",
+              "uid": "35240-ba8916bb-5dc2-4c6e-810e-263bd46a2b57"
+            },
+            {
+              "name": "jobs",
+              "item": [
+                {
+                  "name": "{jobId}",
+                  "item": [
+                    {
+                      "name": "run",
+                      "item": [
+                        {
+                          "name": "Trigger a job run",
+                          "id": "1a08204c-f7e6-434d-9df8-432250a87562",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "POST",
+                            "header": [],
+                            "url": {
+                              "raw": "{{baseUrl}}/accounts/:accountId/jobs/:jobId/run/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "accounts",
+                                ":accountId",
+                                "jobs",
+                                ":jobId",
+                                "run",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "id": "2d6373ad-016a-465a-8147-dfcd8638456c",
+                                  "key": "accountId",
+                                  "value": "<integer>",
+                                  "description": "(Required) "
+                                },
+                                {
+                                  "id": "df625322-500d-4bc2-af1b-165aab805e70",
+                                  "key": "jobId",
+                                  "value": "<integer>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            }
+                          },
+                          "response": [
+                            {
+                              "id": "aad07055-09a4-476e-bdc9-9b09417d04df",
+                              "name": "Job run triggered.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/accounts/:accountId/jobs/:jobId/run/",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "accounts",
+                                    ":accountId",
+                                    "jobs",
+                                    ":jobId",
+                                    "run",
+                                    ""
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "accountId"
+                                    },
+                                    {
+                                      "key": "jobId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-06-05T15:07:29.000Z",
+                              "updatedAt": "2026-06-05T15:07:29.000Z",
+                              "uid": "35240-aad07055-09a4-476e-bdc9-9b09417d04df"
+                            }
+                          ],
+                          "createdAt": "2026-06-05T15:07:29.000Z",
+                          "updatedAt": "2026-06-05T15:07:29.000Z",
+                          "uid": "35240-1a08204c-f7e6-434d-9df8-432250a87562"
+                        }
+                      ],
+                      "id": "b210134d-bbef-4ce8-8a77-ca8d27ec7da7",
+                      "createdAt": "2026-06-05T15:07:29.000Z",
+                      "updatedAt": "2026-06-05T15:07:29.000Z",
+                      "uid": "35240-b210134d-bbef-4ce8-8a77-ca8d27ec7da7"
+                    }
+                  ],
+                  "id": "4dafb333-ef42-4737-8903-39a137717ec5",
+                  "createdAt": "2026-06-05T15:07:29.000Z",
+                  "updatedAt": "2026-06-05T15:07:29.000Z",
+                  "uid": "35240-4dafb333-ef42-4737-8903-39a137717ec5"
+                },
+                {
+                  "name": "List jobs",
+                  "id": "2f34100a-eb46-4ccd-801e-17752559a21b",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:accountId/jobs/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":accountId",
+                        "jobs",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "id": "b0325706-172f-4cbd-b9e1-edc0de40e082",
+                          "key": "accountId",
+                          "value": "<integer>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "4b21d5e3-e9b1-4c6e-8b48-66385312bbdb",
+                      "name": "A list of jobs.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:accountId/jobs/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":accountId",
+                            "jobs",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "accountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-06-05T15:07:29.000Z",
+                      "updatedAt": "2026-06-05T15:07:29.000Z",
+                      "uid": "35240-4b21d5e3-e9b1-4c6e-8b48-66385312bbdb"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:07:29.000Z",
+                  "updatedAt": "2026-06-05T15:07:29.000Z",
+                  "uid": "35240-2f34100a-eb46-4ccd-801e-17752559a21b"
+                },
+                {
+                  "name": "Create a job",
+                  "id": "3fc3b334-ce81-4e69-acb8-249256d67694",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:accountId/jobs/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":accountId",
+                        "jobs",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "id": "6d3ea928-7069-4656-8814-dcb5240711f8",
+                          "key": "accountId",
+                          "value": "<integer>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "85dc6290-5626-4663-8e42-902118be0d9e",
+                      "name": "Job created.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:accountId/jobs/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":accountId",
+                            "jobs",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "accountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-06-05T15:07:29.000Z",
+                      "updatedAt": "2026-06-05T15:07:29.000Z",
+                      "uid": "35240-85dc6290-5626-4663-8e42-902118be0d9e"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:07:29.000Z",
+                  "updatedAt": "2026-06-05T15:07:29.000Z",
+                  "uid": "35240-3fc3b334-ce81-4e69-acb8-249256d67694"
+                }
+              ],
+              "id": "759f75f2-794c-4ff4-a08d-5de954c94743",
+              "createdAt": "2026-06-05T15:07:29.000Z",
+              "updatedAt": "2026-06-05T15:07:29.000Z",
+              "uid": "35240-759f75f2-794c-4ff4-a08d-5de954c94743"
+            },
+            {
+              "name": "runs",
+              "item": [
+                {
+                  "name": "{runId}",
+                  "item": [
+                    {
+                      "name": "artifacts",
+                      "item": [
+                        {
+                          "name": "List run artifacts",
+                          "id": "51fb5bed-e38e-4c41-be07-7a6cf8313474",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [],
+                            "url": {
+                              "raw": "{{baseUrl}}/accounts/:accountId/runs/:runId/artifacts/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "accounts",
+                                ":accountId",
+                                "runs",
+                                ":runId",
+                                "artifacts",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "id": "130e2a3a-de10-41dc-bc00-266b51ff0fd1",
+                                  "key": "accountId",
+                                  "value": "<integer>",
+                                  "description": "(Required) "
+                                },
+                                {
+                                  "id": "b43822d3-4c65-4ff3-b7c6-24ac44e93c0e",
+                                  "key": "runId",
+                                  "value": "<integer>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            }
+                          },
+                          "response": [
+                            {
+                              "id": "d4be775c-ba0d-4a40-a273-f1e6bf440541",
+                              "name": "A list of run artifacts (manifest.json, catalog.json, run_results.json).",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/accounts/:accountId/runs/:runId/artifacts/",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "accounts",
+                                    ":accountId",
+                                    "runs",
+                                    ":runId",
+                                    "artifacts",
+                                    ""
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "accountId"
+                                    },
+                                    {
+                                      "key": "runId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-06-05T15:07:29.000Z",
+                              "updatedAt": "2026-06-05T15:07:29.000Z",
+                              "uid": "35240-d4be775c-ba0d-4a40-a273-f1e6bf440541"
+                            }
+                          ],
+                          "createdAt": "2026-06-05T15:07:29.000Z",
+                          "updatedAt": "2026-06-05T15:07:29.000Z",
+                          "uid": "35240-51fb5bed-e38e-4c41-be07-7a6cf8313474"
+                        }
+                      ],
+                      "id": "c17fa33e-7026-451d-bbd0-b6f776da7af3",
+                      "createdAt": "2026-06-05T15:07:29.000Z",
+                      "updatedAt": "2026-06-05T15:07:29.000Z",
+                      "uid": "35240-c17fa33e-7026-451d-bbd0-b6f776da7af3"
+                    },
+                    {
+                      "name": "Get a run",
+                      "id": "846316a0-af9f-4b7c-874e-70ff325639e2",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:accountId/runs/:runId/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":accountId",
+                            "runs",
+                            ":runId",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "id": "d564657f-7cd9-48e4-a55f-de0056b5c5a2",
+                              "key": "accountId",
+                              "value": "<integer>",
+                              "description": "(Required) "
+                            },
+                            {
+                              "id": "96729700-d9a1-444e-9186-954275121ccf",
+                              "key": "runId",
+                              "value": "<integer>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "a854f16d-a6d3-44fd-9efe-51fb7b394e24",
+                          "name": "A run resource.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/accounts/:accountId/runs/:runId/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "accounts",
+                                ":accountId",
+                                "runs",
+                                ":runId",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "key": "accountId"
+                                },
+                                {
+                                  "key": "runId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-06-05T15:07:29.000Z",
+                          "updatedAt": "2026-06-05T15:07:29.000Z",
+                          "uid": "35240-a854f16d-a6d3-44fd-9efe-51fb7b394e24"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:07:29.000Z",
+                      "updatedAt": "2026-06-05T15:07:29.000Z",
+                      "uid": "35240-846316a0-af9f-4b7c-874e-70ff325639e2"
+                    }
+                  ],
+                  "id": "3ad42e7c-873c-4c9f-bd51-feb3db448f7a",
+                  "createdAt": "2026-06-05T15:07:29.000Z",
+                  "updatedAt": "2026-06-05T15:07:29.000Z",
+                  "uid": "35240-3ad42e7c-873c-4c9f-bd51-feb3db448f7a"
+                },
+                {
+                  "name": "List runs",
+                  "id": "d7f95843-2a26-4017-adae-acf3ec17f239",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:accountId/runs/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":accountId",
+                        "runs",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "id": "4a461f46-4136-484a-8484-7761f91217b7",
+                          "key": "accountId",
+                          "value": "<integer>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "fbd03f3a-2254-4270-995c-c6496027ced8",
+                      "name": "A list of runs.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:accountId/runs/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":accountId",
+                            "runs",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "accountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-06-05T15:07:29.000Z",
+                      "updatedAt": "2026-06-05T15:07:29.000Z",
+                      "uid": "35240-fbd03f3a-2254-4270-995c-c6496027ced8"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:07:29.000Z",
+                  "updatedAt": "2026-06-05T15:07:29.000Z",
+                  "uid": "35240-d7f95843-2a26-4017-adae-acf3ec17f239"
+                }
+              ],
+              "id": "50f1064a-0e80-499a-a04c-c7a6845f6f96",
+              "createdAt": "2026-06-05T15:07:29.000Z",
+              "updatedAt": "2026-06-05T15:07:29.000Z",
+              "uid": "35240-50f1064a-0e80-499a-a04c-c7a6845f6f96"
+            },
+            {
+              "name": "environments",
+              "item": [
+                {
+                  "name": "List environments",
+                  "id": "0521ad83-6861-428c-a8e0-820fca3a4ba4",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:accountId/environments/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":accountId",
+                        "environments",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "id": "f9e794bf-3722-434e-b470-8307cfbeefa0",
+                          "key": "accountId",
+                          "value": "<integer>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "dd996b22-50dd-4187-9c67-3e943505e009",
+                      "name": "A list of environments.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:accountId/environments/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":accountId",
+                            "environments",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "accountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-06-05T15:07:29.000Z",
+                      "updatedAt": "2026-06-05T15:07:29.000Z",
+                      "uid": "35240-dd996b22-50dd-4187-9c67-3e943505e009"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:07:29.000Z",
+                  "updatedAt": "2026-06-05T15:07:29.000Z",
+                  "uid": "35240-0521ad83-6861-428c-a8e0-820fca3a4ba4"
+                }
+              ],
+              "id": "aae767ea-99fd-42c0-b9a0-88dd5b84f491",
+              "createdAt": "2026-06-05T15:07:29.000Z",
+              "updatedAt": "2026-06-05T15:07:29.000Z",
+              "uid": "35240-aae767ea-99fd-42c0-b9a0-88dd5b84f491"
+            }
+          ],
+          "id": "8cadb6f4-4e54-4070-856e-56aa44784f3d",
+          "createdAt": "2026-06-05T15:07:29.000Z",
+          "updatedAt": "2026-06-05T15:07:29.000Z",
+          "uid": "35240-8cadb6f4-4e54-4070-856e-56aa44784f3d"
+        },
+        {
+          "name": "List accounts",
+          "id": "68928048-d87c-4b92-ae2f-4848e23e72bc",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "accounts",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b756ecdf-5708-4ffe-b497-cd3741a34c5d",
+              "name": "A list of dbt Cloud accounts.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/accounts/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    ""
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:07:29.000Z",
+              "updatedAt": "2026-06-05T15:07:29.000Z",
+              "uid": "35240-b756ecdf-5708-4ffe-b497-cd3741a34c5d"
+            }
+          ],
+          "createdAt": "2026-06-05T15:07:29.000Z",
+          "updatedAt": "2026-06-05T15:07:29.000Z",
+          "uid": "35240-68928048-d87c-4b92-ae2f-4848e23e72bc"
+        }
+      ],
+      "id": "a7775a17-1ed1-4856-aa03-a7e71bacb816",
+      "createdAt": "2026-06-05T15:07:29.000Z",
+      "updatedAt": "2026-06-05T15:07:29.000Z",
+      "uid": "35240-a7775a17-1ed1-4856-aa03-a7e71bacb816"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://cloud.getdbt.com/api/v3"
+    }
+  ]
+}

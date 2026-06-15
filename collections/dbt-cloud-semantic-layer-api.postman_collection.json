@@ -1,0 +1,141 @@
+{
+  "item": [
+    {
+      "id": "bd7cde50-cb13-4f03-b5dd-2b549e6cbcd4",
+      "name": "Metrics",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "03501670-19b4-46b3-9a0f-7ceaf2a09b5a",
+          "name": "Execute a Semantic Layer GraphQL query",
+          "request": {
+            "name": "Execute a Semantic Layer GraphQL query",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "graphql"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dee11b3c-51a9-44e9-9415-b83931024b0a",
+              "name": "GraphQL response containing metric or dimension data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "graphql"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "72943da9-3b72-477d-8042-bed6410478f4",
+      "name": "Dimensions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://semantic-layer.cloud.getdbt.com/api/graphql",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "269bfb1d-bf3e-49e9-89c2-3786aeeb9376",
+    "name": "dbt Cloud Semantic Layer API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The dbt Cloud Semantic Layer API enables querying of metrics and dimensions defined in MetricFlow. It is exposed via GraphQL, JDBC, and a Python SDK so downstream BI and data tools can pull governed metric values consistently.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "info": {
+    "_postman_id": "7dc455ca-6b75-4d34-9e1f-36bde00a1382",
+    "name": "dbt Cloud Discovery API",
+    "description": "The dbt Cloud Discovery API exposes metadata generated when dbt Cloud runs a project, including details about models, sources, exposures, seeds, snapshots, tests, and execution results. The API is GraphQL-based.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:07:30.000Z",
+    "updatedAt": "2026-06-05T15:07:31.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-7dc455ca-6b75-4d34-9e1f-36bde00a1382"
+  },
+  "item": [
+    {
+      "name": "graphql",
+      "item": [
+        {
+          "name": "Execute a Discovery API GraphQL query",
+          "id": "f863eac3-b624-43cc-8882-73027b75e84e",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {}\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f9e872e3-d290-4f73-8bf9-82b094ece552",
+              "name": "GraphQL response containing requested metadata.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/graphql",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "graphql"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:07:31.000Z",
+              "updatedAt": "2026-06-05T15:07:31.000Z",
+              "uid": "35240-f9e872e3-d290-4f73-8bf9-82b094ece552"
+            }
+          ],
+          "createdAt": "2026-06-05T15:07:31.000Z",
+          "updatedAt": "2026-06-05T15:07:31.000Z",
+          "uid": "35240-f863eac3-b624-43cc-8882-73027b75e84e"
+        }
+      ],
+      "id": "f077c134-417c-4c14-95ba-7be2f1a028ed",
+      "createdAt": "2026-06-05T15:07:31.000Z",
+      "updatedAt": "2026-06-05T15:07:31.000Z",
+      "uid": "35240-f077c134-417c-4c14-95ba-7be2f1a028ed"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://metadata.cloud.getdbt.com/graphql"
+    }
+  ]
+}
