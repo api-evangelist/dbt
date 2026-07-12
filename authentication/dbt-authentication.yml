@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/dbt-cloud-administrative-api-openapi.yml, openapi/dbt-cloud-discovery-api-openapi.yml,
+  openapi/dbt-cloud-semantic-layer-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: Token
+  sources:
+  - openapi/dbt-cloud-administrative-api-openapi.yml
+  - openapi/dbt-cloud-discovery-api-openapi.yml
+  - openapi/dbt-cloud-semantic-layer-api-openapi.yml

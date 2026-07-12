@@ -90,6 +90,12 @@ apis:
   - type: OpenAPI
     url: openapi/dbt-cloud-semantic-layer-api-openapi.yml
 common:
+- type: TrustCenter
+  url: security/dbt-trust-center.yml
+- type: DomainSecurity
+  url: security/dbt-domain-security.yml
+- type: Authentication
+  url: authentication/dbt-authentication.yml
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/dbt/overview
 - type: Arazzo
