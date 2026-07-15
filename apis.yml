@@ -90,6 +90,8 @@ apis:
   - type: OpenAPI
     url: openapi/dbt-cloud-semantic-layer-api-openapi.yml
 common:
+- type: AgenticAccess
+  url: agentic-access/dbt-agentic-access.yml
 - type: TrustCenter
   url: security/dbt-trust-center.yml
 - type: DomainSecurity
