@@ -1,0 +1,59 @@
+openapi: 3.1.0
+info:
+  title: dbt Cloud Administrative Accounts Projects API
+  description: The dbt Cloud Administrative API enables programmatic management of dbt Cloud accounts, projects, jobs, runs, environments, and other resources. The API supports automation of dbt Cloud workflows and integration with external orchestration tools.
+  version: '3'
+  contact:
+    name: dbt Labs Support
+    url: https://www.getdbt.com/community
+servers:
+- url: https://cloud.getdbt.com/api/v3
+  description: Multi-tenant production
+- url: https://cloud.getdbt.com/api/v2
+  description: Legacy v2 API
+security:
+- bearerAuth: []
+tags:
+- name: Projects
+paths:
+  /accounts/{accountId}/projects/:
+    get:
+      summary: List projects in an account
+      operationId: listProjects
+      tags:
+      - Projects
+      parameters:
+      - in: path
+        name: accountId
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A list of projects.
+  /accounts/{accountId}/projects/{projectId}/:
+    get:
+      summary: Get a project
+      operationId: getProject
+      tags:
+      - Projects
+      parameters:
+      - in: path
+        name: accountId
+        required: true
+        schema:
+          type: integer
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A project resource.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Token
