@@ -2,9 +2,22 @@ aid: dbt
 name: dbt
 url: https://raw.githubusercontent.com/api-evangelist/dbt/refs/heads/main/apis.yml
 kind: company
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 position: Consuming
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/dbt.png
 tags:
 - Analytics Engineering
 - Data
@@ -22,25 +35,18 @@ description: >-
   programmatically (Administrative API), inspecting project metadata (Discovery API), and querying governed metrics
   (Semantic Layer API).
 apis:
-- aid: dbt:dbt-cloud-administrative-api
-  name: dbt Cloud Administrative API
-  description: >-
-    The dbt Cloud Administrative API manages accounts, projects, jobs, runs, environments, and other resources. It is
-    the primary integration point for external orchestrators (Airflow, Dagster, Prefect) and for Terraform-based
-    management of dbt Cloud configuration.
+- aid: dbt:dbt-accounts-api
+  name: dbt Accounts API
+  description: The Accounts API from dbt — 1 operation(s) for accounts.
   humanURL: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
   baseURL: https://cloud.getdbt.com/api/v3
   tags:
   - Accounts
-  - Administration
-  - Jobs
-  - Projects
-  - Runs
   properties:
+  - type: OpenAPI
+    url: openapi/dbt-accounts-api-openapi.yml
   - type: Documentation
     url: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
-  - type: OpenAPI
-    url: openapi/dbt-cloud-administrative-api-openapi.yml
   - type: JSONSchema
     url: json-schema/dbt-job.json
   - type: JSONSchema
@@ -49,46 +55,168 @@ apis:
     url: rules/dbt-cloud-administrative-api-rules.yml
   - type: Capabilities
     url: capabilities/dbt-cloud-administrative-api-capabilities.yml
-- aid: dbt:dbt-cloud-discovery-api
-  name: dbt Cloud Discovery API
-  description: >-
-    Every time dbt Cloud runs a project, it generates and stores information about the project. The Discovery API
-    exposes that metadata including details about models, sources, exposures, and execution results so teams can
-    understand and govern their DAG.
-  humanURL: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
-  baseURL: https://metadata.cloud.getdbt.com/graphql
-  tags:
-  - Discovery
-  - GraphQL
-  - Lineage
-  - Metadata
-  properties:
   - type: Documentation
     url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
-  - type: OpenAPI
-    url: openapi/dbt-cloud-discovery-api-openapi.yml
-  - url: graphql/dbt-graphql.md
-    type: GraphQL
-- aid: dbt:dbt-cloud-semantic-layer-api
-  name: dbt Cloud Semantic Layer API
-  description: >-
-    The dbt Semantic Layer lets teams define metrics in code with MetricFlow and query them consistently from BI
-    tools, notebooks, and applications. The Semantic Layer API exposes metric and dimension queries via GraphQL, JDBC,
-    and a Python SDK.
-  humanURL: https://docs.getdbt.com/docs/dbt-cloud-apis/sl-api-overview
-  baseURL: https://semantic-layer.cloud.getdbt.com/api/graphql
-  tags:
-  - Dimensions
-  - GraphQL
-  - JDBC
-  - MetricFlow
-  - Metrics
-  - Semantic Layer
-  properties:
+  - type: GraphQL
+    url: graphql/dbt-graphql.md
   - type: Documentation
     url: https://docs.getdbt.com/docs/dbt-cloud-apis/sl-api-overview
+- aid: dbt:dbt-environments-api
+  name: dbt Environments API
+  description: The Environments API from dbt — 1 operation(s) for environments.
+  humanURL: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  baseURL: https://cloud.getdbt.com/api/v3
+  tags:
+  - Environments
+  properties:
   - type: OpenAPI
-    url: openapi/dbt-cloud-semantic-layer-api-openapi.yml
+    url: openapi/dbt-environments-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  - type: JSONSchema
+    url: json-schema/dbt-job.json
+  - type: JSONSchema
+    url: json-schema/dbt-run.json
+  - type: Rules
+    url: rules/dbt-cloud-administrative-api-rules.yml
+  - type: Capabilities
+    url: capabilities/dbt-cloud-administrative-api-capabilities.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
+  - type: GraphQL
+    url: graphql/dbt-graphql.md
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/sl-api-overview
+- aid: dbt:dbt-jobs-api
+  name: dbt Jobs API
+  description: The Jobs API from dbt — 1 operation(s) for jobs.
+  humanURL: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  baseURL: https://cloud.getdbt.com/api/v3
+  tags:
+  - Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/dbt-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  - type: JSONSchema
+    url: json-schema/dbt-job.json
+  - type: JSONSchema
+    url: json-schema/dbt-run.json
+  - type: Rules
+    url: rules/dbt-cloud-administrative-api-rules.yml
+  - type: Capabilities
+    url: capabilities/dbt-cloud-administrative-api-capabilities.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
+  - type: GraphQL
+    url: graphql/dbt-graphql.md
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/sl-api-overview
+- aid: dbt:dbt-metadata-api
+  name: dbt Metadata API
+  description: The Metadata API from dbt — 1 operation(s) for metadata.
+  humanURL: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  baseURL: https://cloud.getdbt.com/api/v3
+  tags:
+  - Metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/dbt-metadata-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  - type: JSONSchema
+    url: json-schema/dbt-job.json
+  - type: JSONSchema
+    url: json-schema/dbt-run.json
+  - type: Rules
+    url: rules/dbt-cloud-administrative-api-rules.yml
+  - type: Capabilities
+    url: capabilities/dbt-cloud-administrative-api-capabilities.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
+  - type: GraphQL
+    url: graphql/dbt-graphql.md
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/sl-api-overview
+- aid: dbt:dbt-metrics-api
+  name: dbt Metrics API
+  description: The Metrics API from dbt — 1 operation(s) for metrics.
+  humanURL: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  baseURL: https://cloud.getdbt.com/api/v3
+  tags:
+  - Metrics
+  properties:
+  - type: OpenAPI
+    url: openapi/dbt-metrics-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  - type: JSONSchema
+    url: json-schema/dbt-job.json
+  - type: JSONSchema
+    url: json-schema/dbt-run.json
+  - type: Rules
+    url: rules/dbt-cloud-administrative-api-rules.yml
+  - type: Capabilities
+    url: capabilities/dbt-cloud-administrative-api-capabilities.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
+  - type: GraphQL
+    url: graphql/dbt-graphql.md
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/sl-api-overview
+- aid: dbt:dbt-projects-api
+  name: dbt Projects API
+  description: The Projects API from dbt — 2 operation(s) for projects.
+  humanURL: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  baseURL: https://cloud.getdbt.com/api/v3
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/dbt-projects-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  - type: JSONSchema
+    url: json-schema/dbt-job.json
+  - type: JSONSchema
+    url: json-schema/dbt-run.json
+  - type: Rules
+    url: rules/dbt-cloud-administrative-api-rules.yml
+  - type: Capabilities
+    url: capabilities/dbt-cloud-administrative-api-capabilities.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
+  - type: GraphQL
+    url: graphql/dbt-graphql.md
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/sl-api-overview
+- aid: dbt:dbt-runs-api
+  name: dbt Runs API
+  description: The Runs API from dbt — 4 operation(s) for runs.
+  humanURL: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  baseURL: https://cloud.getdbt.com/api/v3
+  tags:
+  - Runs
+  properties:
+  - type: OpenAPI
+    url: openapi/dbt-runs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  - type: JSONSchema
+    url: json-schema/dbt-job.json
+  - type: JSONSchema
+    url: json-schema/dbt-run.json
+  - type: Rules
+    url: rules/dbt-cloud-administrative-api-rules.yml
+  - type: Capabilities
+    url: capabilities/dbt-cloud-administrative-api-capabilities.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
+  - type: GraphQL
+    url: graphql/dbt-graphql.md
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/sl-api-overview
 common:
 - type: AgenticAccess
   url: agentic-access/dbt-agentic-access.yml
