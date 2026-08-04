@@ -1,0 +1,26 @@
+{
+  "provider": "dbt",
+  "sources": [
+    "dbt-accounts-api-openapi.yml",
+    "dbt-environments-api-openapi.yml",
+    "dbt-jobs-api-openapi.yml",
+    "dbt-metadata-api-openapi.yml",
+    "dbt-metrics-api-openapi.yml",
+    "dbt-projects-api-openapi.yml",
+    "dbt-runs-api-openapi.yml"
+  ],
+  "outputs": [
+    "dbt-accounts-api-openapi.yml",
+    "dbt-environments-api-openapi.yml",
+    "dbt-jobs-api-openapi.yml",
+    "dbt-metadata-api-openapi.yml",
+    "dbt-metrics-api-openapi.yml",
+    "dbt-projects-api-openapi.yml",
+    "dbt-runs-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

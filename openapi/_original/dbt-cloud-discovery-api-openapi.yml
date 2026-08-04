@@ -1,0 +1,44 @@
+openapi: 3.1.0
+info:
+  title: dbt Cloud Discovery API
+  description: >-
+    The dbt Cloud Discovery API exposes metadata generated when dbt Cloud
+    runs a project, including details about models, sources, exposures,
+    seeds, snapshots, tests, and execution results. The API is GraphQL-based.
+  version: "1.0"
+servers:
+  - url: https://metadata.cloud.getdbt.com/graphql
+    description: Discovery API GraphQL endpoint
+tags:
+  - name: Metadata
+paths:
+  /graphql:
+    post:
+      summary: Execute a Discovery API GraphQL query
+      operationId: executeDiscoveryQuery
+      tags:
+        - Metadata
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                variables:
+                  type: object
+      responses:
+        "200":
+          description: GraphQL response containing requested metadata.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Token
+security:
+  - bearerAuth: []
