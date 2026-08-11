@@ -53,8 +53,6 @@ apis:
     url: json-schema/dbt-run.json
   - type: Rules
     url: rules/dbt-cloud-administrative-api-rules.yml
-  - type: Capabilities
-    url: capabilities/dbt-cloud-administrative-api-capabilities.yml
   - type: Documentation
     url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
   - type: GraphQL
@@ -79,8 +77,6 @@ apis:
     url: json-schema/dbt-run.json
   - type: Rules
     url: rules/dbt-cloud-administrative-api-rules.yml
-  - type: Capabilities
-    url: capabilities/dbt-cloud-administrative-api-capabilities.yml
   - type: Documentation
     url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
   - type: GraphQL
@@ -105,8 +101,6 @@ apis:
     url: json-schema/dbt-run.json
   - type: Rules
     url: rules/dbt-cloud-administrative-api-rules.yml
-  - type: Capabilities
-    url: capabilities/dbt-cloud-administrative-api-capabilities.yml
   - type: Documentation
     url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
   - type: GraphQL
@@ -131,8 +125,6 @@ apis:
     url: json-schema/dbt-run.json
   - type: Rules
     url: rules/dbt-cloud-administrative-api-rules.yml
-  - type: Capabilities
-    url: capabilities/dbt-cloud-administrative-api-capabilities.yml
   - type: Documentation
     url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
   - type: GraphQL
@@ -157,8 +149,6 @@ apis:
     url: json-schema/dbt-run.json
   - type: Rules
     url: rules/dbt-cloud-administrative-api-rules.yml
-  - type: Capabilities
-    url: capabilities/dbt-cloud-administrative-api-capabilities.yml
   - type: Documentation
     url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
   - type: GraphQL
@@ -183,8 +173,6 @@ apis:
     url: json-schema/dbt-run.json
   - type: Rules
     url: rules/dbt-cloud-administrative-api-rules.yml
-  - type: Capabilities
-    url: capabilities/dbt-cloud-administrative-api-capabilities.yml
   - type: Documentation
     url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
   - type: GraphQL
@@ -209,8 +197,6 @@ apis:
     url: json-schema/dbt-run.json
   - type: Rules
     url: rules/dbt-cloud-administrative-api-rules.yml
-  - type: Capabilities
-    url: capabilities/dbt-cloud-administrative-api-capabilities.yml
   - type: Documentation
     url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
   - type: GraphQL
