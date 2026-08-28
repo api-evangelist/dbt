@@ -12,11 +12,11 @@ info:
     executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: dbtAdminApi
-  url: ../openapi/dbt-cloud-administrative-api-openapi.yml
+- name: metricsApi
+  url: ../openapi/dbt-metrics-api-openapi.yml
   type: openapi
-- name: dbtSemanticLayerApi
-  url: ../openapi/dbt-cloud-semantic-layer-api-openapi.yml
+- name: runsApi
+  url: ../openapi/dbt-runs-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: run-to-semantic-metrics

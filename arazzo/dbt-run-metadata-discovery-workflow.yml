@@ -12,11 +12,11 @@ info:
     OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: dbtAdminApi
-  url: ../openapi/dbt-cloud-administrative-api-openapi.yml
+- name: metadataApi
+  url: ../openapi/dbt-metadata-api-openapi.yml
   type: openapi
-- name: dbtDiscoveryApi
-  url: ../openapi/dbt-cloud-discovery-api-openapi.yml
+- name: runsApi
+  url: ../openapi/dbt-runs-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: run-metadata-discovery

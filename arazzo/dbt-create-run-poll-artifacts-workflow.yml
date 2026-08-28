@@ -12,8 +12,11 @@ info:
     OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: dbtAdminApi
-  url: ../openapi/dbt-cloud-administrative-api-openapi.yml
+- name: jobsApi
+  url: ../openapi/dbt-jobs-api-openapi.yml
+  type: openapi
+- name: runsApi
+  url: ../openapi/dbt-runs-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: create-run-poll-artifacts
