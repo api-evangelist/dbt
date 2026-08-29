@@ -1,26 +1,35 @@
 {
   "provider": "dbt",
   "sources": [
-    "dbt-accounts-api-openapi.yml",
-    "dbt-environments-api-openapi.yml",
-    "dbt-jobs-api-openapi.yml",
-    "dbt-metadata-api-openapi.yml",
-    "dbt-metrics-api-openapi.yml",
-    "dbt-projects-api-openapi.yml",
-    "dbt-runs-api-openapi.yml"
+    "_original/dbt-cloud-administrative-api-openapi.yml",
+    "_original/dbt-cloud-discovery-api-openapi.yml",
+    "_original/dbt-cloud-semantic-layer-api-openapi.yml"
   ],
   "outputs": [
     "dbt-accounts-api-openapi.yml",
     "dbt-environments-api-openapi.yml",
     "dbt-jobs-api-openapi.yml",
-    "dbt-metadata-api-openapi.yml",
-    "dbt-metrics-api-openapi.yml",
     "dbt-projects-api-openapi.yml",
-    "dbt-runs-api-openapi.yml"
+    "dbt-runs-api-openapi.yml",
+    "dbt-metadata-api-openapi.yml",
+    "dbt-metrics-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (3 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "dbt-cloud-administrative-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "dbt-cloud-discovery-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "dbt-cloud-semantic-layer-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0"
+  ],
+  "skipped": [
+    "dbt-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dbt-environments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dbt-jobs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dbt-metadata-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dbt-metrics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dbt-projects-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dbt-runs-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

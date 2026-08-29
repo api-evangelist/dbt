@@ -1,16 +1,11 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: dbt Cloud Administrative Accounts Metrics API
-  description: The dbt Cloud Administrative API enables programmatic management of dbt Cloud accounts, projects, jobs, runs, environments, and other resources. The API supports automation of dbt Cloud workflows and integration with external orchestration tools.
-  version: '3'
-  contact:
-    name: dbt Labs Support
-    url: https://www.getdbt.com/community
+  title: dbt Cloud Semantic Layer Metrics API
+  description: The dbt Cloud Semantic Layer API enables querying of metrics and dimensions defined in MetricFlow. It is exposed via GraphQL, JDBC, and a Python SDK so downstream BI and data tools can pull governed metric values consistently.
+  version: '1.0'
 servers:
-- url: https://cloud.getdbt.com/api/v3
-  description: Multi-tenant production
-- url: https://cloud.getdbt.com/api/v2
-  description: Legacy v2 API
+- url: https://semantic-layer.cloud.getdbt.com/api/graphql
+  description: Semantic Layer GraphQL endpoint
 security:
 - bearerAuth: []
 tags:

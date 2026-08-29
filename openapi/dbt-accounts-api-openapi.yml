@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: dbt Cloud Administrative Accounts API
   description: The dbt Cloud Administrative API enables programmatic management of dbt Cloud accounts, projects, jobs, runs, environments, and other resources. The API supports automation of dbt Cloud workflows and integration with external orchestration tools.

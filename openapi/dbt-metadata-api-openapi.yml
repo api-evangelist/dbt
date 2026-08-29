@@ -1,16 +1,11 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: dbt Cloud Administrative Accounts Metadata API
-  description: The dbt Cloud Administrative API enables programmatic management of dbt Cloud accounts, projects, jobs, runs, environments, and other resources. The API supports automation of dbt Cloud workflows and integration with external orchestration tools.
-  version: '3'
-  contact:
-    name: dbt Labs Support
-    url: https://www.getdbt.com/community
+  title: dbt Cloud Discovery Metadata API
+  description: The dbt Cloud Discovery API exposes metadata generated when dbt Cloud runs a project, including details about models, sources, exposures, seeds, snapshots, tests, and execution results. The API is GraphQL-based.
+  version: '1.0'
 servers:
-- url: https://cloud.getdbt.com/api/v3
-  description: Multi-tenant production
-- url: https://cloud.getdbt.com/api/v2
-  description: Legacy v2 API
+- url: https://metadata.cloud.getdbt.com/graphql
+  description: Discovery API GraphQL endpoint
 security:
 - bearerAuth: []
 tags:
