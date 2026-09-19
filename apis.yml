@@ -88,6 +88,8 @@ apis:
   humanURL: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
   baseURL: https://cloud.getdbt.com/api/v3
   tags:
+  - Environment
+  tags_raw:
   - Environments
   properties:
   - type: OpenAPI
