@@ -243,6 +243,9 @@ apis:
   - type: Documentation
     url: https://docs.getdbt.com/docs/dbt-cloud-apis/sl-api-overview
 common:
+- type: CapabilityMap
+  url: capabilities/dbt-capability-edges.yml
+  name: dbt Business Capability Map
 - type: AgenticAccess
   url: agentic-access/dbt-agentic-access.yml
 - type: TrustCenter

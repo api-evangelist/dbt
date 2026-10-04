@@ -1,0 +1,25 @@
+slug: dbt
+provider: dbt
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Metrics
+  spec_file: dbt-metrics-api-openapi.yml
+  capability_id: BC-610.50
+  capability_id_l1: BC-610
+  capability_name: Analytics & BI Management
+  confidence: 0.72
+  evidence: '"enables querying of metrics and dimensions defined in MetricFlow" ... "so downstream BI
+    and data tools can pull governed metric values consistently"'
+  reason: The semantic-layer endpoint serves governed metric values to downstream BI tooling, which is
+    analytics and BI delivery. Single GraphQL operation, so confidence is moderate rather than high.
