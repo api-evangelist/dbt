@@ -58,7 +58,7 @@ tags_raw:
 - SQL
 - Transformation
 created: '2025-01-08'
-modified: '2026-05-19'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 description: >-
   dbt Labs operates dbt Cloud, the managed platform for the open-source dbt (data build tool) used to transform data
@@ -243,6 +243,10 @@ apis:
   - type: Documentation
     url: https://docs.getdbt.com/docs/dbt-cloud-apis/sl-api-overview
 common:
+- url: https://docs.getdbt.com/blog
+  type: Blog
+- url: https://docs.getdbt.com/blog/rss.xml
+  type: BlogRSS
 - type: CapabilityMap
   url: capabilities/dbt-capability-edges.yml
   name: dbt Business Capability Map
