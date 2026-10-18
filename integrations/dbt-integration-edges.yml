@@ -4,8 +4,17 @@ checked:
 - https://azuremarketplace.microsoft.com/
 - https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/
 - https://github.com/marketplace?type=actions
+- https://hub.getdbt.com/api/v1/index.json
 - https://marketplace.visualstudio.com/vscode
-marketplace_apps: []
+marketplace_apps:
+- marketplace: own
+  channel: partner-built
+  app: dbt
+  url: https://hub.getdbt.com/
+  app_count: 379
+  adapter: sweep-data-integration.py:dbt
+  listed: 13
+  note: 'dbt package hub (hub.getdbt.com/api/v1): only domain-linked vendors are written'
 edges:
 - partner_name: Microsoft Azure Marketplace
   partner: microsoft-azure
@@ -83,6 +92,437 @@ edges:
     builder: Pipedream repo (component)
   detected_by: sweep-workflow-automation.py
   first_seen: '2026-10-15'
+- partner_name: Altimate AI
+  partner: altimate-ai
+  partner_match: domain
+  partner_url: https://altimate.ai
+  type: marketplace
+  marketplace: dbt-package-hub
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://hub.getdbt.com/AltimateAI/altimate_snowflake_query_tags/latest/
+  app: AltimateAI
+  category: dbt package
+  contract_reference:
+    register: dbt package hub (hub.getdbt.com/api/v1)
+    spec_file: null
+    role: dbt-package-publisher
+    registered_name: AltimateAI
+    matched_domain: altimate.ai
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    packages:
+    - AltimateAI/altimate_snowflake_query_tags
+    github_org: AltimateAI
+    identity_source: 'github-org-website (api.github.com/users/AltimateAI blog: https://www.altimate.ai)'
+    builder: provider (package published from the provider's GitHub org)
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+  identity_source: 'github-org-website (api.github.com/users/AltimateAI blog: https://www.altimate.ai)'
+- partner_name: dltHub
+  partner: dlthub
+  partner_match: domain
+  partner_url: https://dlthub.com
+  type: marketplace
+  marketplace: dbt-package-hub
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://hub.getdbt.com/dlt-hub/github_events/latest/
+  app: dltHub
+  category: dbt package
+  contract_reference:
+    register: dbt package hub (hub.getdbt.com/api/v1)
+    spec_file: null
+    role: dbt-package-publisher
+    registered_name: dltHub
+    matched_domain: dlthub.com
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    packages:
+    - dlt-hub/asana
+    - dlt-hub/chess_pipeline
+    - dlt-hub/dlt_zendesk_pipeline
+    - dlt-hub/freshdesk_pipeline
+    - dlt-hub/ga4_event_export
+    - dlt-hub/github_events
+    - dlt-hub/hubspot
+    - dlt-hub/jira_pipeline
+    - dlt-hub/personio
+    - dlt-hub/pipedrive
+    - dlt-hub/salesforce
+    - dlt-hub/shopify
+    - dlt-hub/stripe_analytics
+    - dlt-hub/workable
+    github_org: dlt-hub
+    identity_source: 'github-org-website (api.github.com/users/dlt-hub blog: https://dlthub.com)'
+    builder: provider (package published from the provider's GitHub org)
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+  identity_source: 'github-org-website (api.github.com/users/dlt-hub blog: https://dlthub.com)'
+- partner_name: Firebolt
+  partner: firebolt
+  partner_match: domain
+  partner_url: https://firebolt.io
+  type: marketplace
+  marketplace: dbt-package-hub
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://hub.getdbt.com/firebolt-db/dbt_artifacts_firebolt/latest/
+  app: 'Firebolt Analytics '
+  category: dbt package
+  contract_reference:
+    register: dbt package hub (hub.getdbt.com/api/v1)
+    spec_file: null
+    role: dbt-package-publisher
+    registered_name: 'Firebolt Analytics '
+    matched_domain: firebolt.io
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    packages:
+    - firebolt-db/dbt_artifacts_firebolt
+    github_org: firebolt-db
+    identity_source: 'github-org-website (api.github.com/users/firebolt-db blog: https://www.firebolt.io)'
+    builder: provider (package published from the provider's GitHub org)
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+  identity_source: 'github-org-website (api.github.com/users/firebolt-db blog: https://www.firebolt.io)'
+- partner_name: Fivetran
+  partner: fivetran
+  partner_match: domain
+  partner_url: https://fivetran.com
+  type: marketplace
+  marketplace: dbt-package-hub
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://hub.getdbt.com/fivetran/mntn/latest/
+  app: Fivetran
+  category: dbt package
+  contract_reference:
+    register: dbt package hub (hub.getdbt.com/api/v1)
+    spec_file: null
+    role: dbt-package-publisher
+    registered_name: Fivetran
+    matched_domain: fivetran.com
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    packages:
+    - fivetran/ad_reporting
+    - fivetran/ai_reporting
+    - fivetran/amazon_ads
+    - fivetran/amazon_ads_source
+    - fivetran/amazon_selling_partner
+    - fivetran/amplitude
+    - fivetran/amplitude_source
+    - fivetran/app_reporting
+    - fivetran/apple_search_ads
+    - fivetran/apple_search_ads_source
+    - fivetran/apple_store
+    - fivetran/apple_store_source
+    - fivetran/asana
+    - fivetran/asana_source
+    - fivetran/aws_cloud_cost
+    github_org: fivetran
+    identity_source: 'github-org-website (api.github.com/users/fivetran blog: https://fivetran.com)'
+    builder: provider (package published from the provider's GitHub org)
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+  identity_source: 'github-org-website (api.github.com/users/fivetran blog: https://fivetran.com)'
+- partner_name: FullStory
+  partner: fullstory
+  partner_match: domain
+  partner_url: https://fullstory.com
+  type: marketplace
+  marketplace: dbt-package-hub
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://hub.getdbt.com/fullstorydev/dbt_fullstory/latest/
+  app: Engineering at Fullstory
+  category: dbt package
+  contract_reference:
+    register: dbt package hub (hub.getdbt.com/api/v1)
+    spec_file: null
+    role: dbt-package-publisher
+    registered_name: Engineering at Fullstory
+    matched_domain: fullstory.com
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    packages:
+    - fullstorydev/dbt_fullstory
+    github_org: fullstorydev
+    identity_source: 'github-org-website (api.github.com/users/fullstorydev blog: https://bionic.fullstory.com/)'
+    builder: provider (package published from the provider's GitHub org)
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+  identity_source: 'github-org-website (api.github.com/users/fullstorydev blog: https://bionic.fullstory.com/)'
+- partner_name: Hightouch
+  partner: hightouch
+  partner_match: domain
+  partner_url: https://hightouch.com
+  type: marketplace
+  marketplace: dbt-package-hub
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://hub.getdbt.com/hightouchio/dbt_hightouch/latest/
+  app: Hightouch
+  category: dbt package
+  contract_reference:
+    register: dbt package hub (hub.getdbt.com/api/v1)
+    spec_file: null
+    role: dbt-package-publisher
+    registered_name: Hightouch
+    matched_domain: hightouch.com
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    packages:
+    - hightouchio/dbt_hightouch
+    github_org: hightouchio
+    identity_source: 'github-org-website (api.github.com/users/hightouchio blog: https://hightouch.com)'
+    builder: provider (package published from the provider's GitHub org)
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+  identity_source: 'github-org-website (api.github.com/users/hightouchio blog: https://hightouch.com)'
+- partner_name: Jitsu
+  partner: jitsu
+  partner_match: domain
+  partner_url: https://jitsu.com
+  type: marketplace
+  marketplace: dbt-package-hub
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://hub.getdbt.com/jitsucom/dbt-jitsu/latest/
+  app: Jitsu
+  category: dbt package
+  contract_reference:
+    register: dbt package hub (hub.getdbt.com/api/v1)
+    spec_file: null
+    role: dbt-package-publisher
+    registered_name: Jitsu
+    matched_domain: jitsu.com
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    packages:
+    - jitsucom/dbt-jitsu
+    - jitsucom/jitsu
+    github_org: jitsucom
+    identity_source: 'github-org-website (api.github.com/users/jitsucom blog: https://jitsu.com)'
+    builder: provider (package published from the provider's GitHub org)
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+  identity_source: 'github-org-website (api.github.com/users/jitsucom blog: https://jitsu.com)'
+- partner_name: Materialize
+  partner: materialize
+  partner_match: domain
+  partner_url: https://materialize.com
+  type: marketplace
+  marketplace: dbt-package-hub
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://hub.getdbt.com/MaterializeInc/materialize_dbt_utils/latest/
+  app: Materialize, Inc.
+  category: dbt package
+  contract_reference:
+    register: dbt package hub (hub.getdbt.com/api/v1)
+    spec_file: null
+    role: dbt-package-publisher
+    registered_name: Materialize, Inc.
+    matched_domain: materialize.com
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    packages:
+    - MaterializeInc/materialize_dbt_utils
+    github_org: MaterializeInc
+    identity_source: 'github-org-website (api.github.com/users/MaterializeInc blog: https://materialize.com)'
+    builder: provider (package published from the provider's GitHub org)
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+  identity_source: 'github-org-website (api.github.com/users/MaterializeInc blog: https://materialize.com)'
+- partner_name: Metaplane
+  partner: metaplane
+  partner_match: domain
+  partner_url: https://metaplane.dev
+  type: marketplace
+  marketplace: dbt-package-hub
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://hub.getdbt.com/metaplane/dbt_expectations/latest/
+  app: Metaplane
+  category: dbt package
+  contract_reference:
+    register: dbt package hub (hub.getdbt.com/api/v1)
+    spec_file: null
+    role: dbt-package-publisher
+    registered_name: Metaplane
+    matched_domain: metaplane.dev
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    packages:
+    - metaplane/dbt_expectations
+    github_org: metaplane
+    identity_source: 'github-org-website (api.github.com/users/metaplane blog: https://metaplane.dev)'
+    builder: provider (package published from the provider's GitHub org)
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+  identity_source: 'github-org-website (api.github.com/users/metaplane blog: https://metaplane.dev)'
+- partner_name: RudderStack
+  partner: rudderstack
+  partner_match: domain
+  partner_url: https://rudderstack.com
+  type: marketplace
+  marketplace: dbt-package-hub
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://hub.getdbt.com/rudderlabs/rudder_events_registry/latest/
+  app: RudderStack
+  category: dbt package
+  contract_reference:
+    register: dbt package hub (hub.getdbt.com/api/v1)
+    spec_file: null
+    role: dbt-package-publisher
+    registered_name: RudderStack
+    matched_domain: rudderstack.com
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    packages:
+    - rudderlabs/id_stitching
+    - rudderlabs/rudder_customer_journey_analysis
+    - rudderlabs/rudder_events_registry
+    - rudderlabs/rudder_id_resolution
+    - rudderlabs/rudder_sessionization
+    github_org: rudderlabs
+    identity_source: 'github-org-website (api.github.com/users/rudderlabs blog: https://www.rudderstack.com)'
+    builder: provider (package published from the provider's GitHub org)
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+  identity_source: 'github-org-website (api.github.com/users/rudderlabs blog: https://www.rudderstack.com)'
+- partner_name: Snowflake
+  partner: snowflake
+  partner_match: domain
+  partner_url: https://snowflake.com
+  type: marketplace
+  marketplace: dbt-package-hub
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://hub.getdbt.com/Snowflake-Labs/dbt_constraints/latest/
+  app: Snowflake Labs
+  category: dbt package
+  contract_reference:
+    register: dbt package hub (hub.getdbt.com/api/v1)
+    spec_file: null
+    role: dbt-package-publisher
+    registered_name: Snowflake Labs
+    matched_domain: snowflake.com
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    packages:
+    - Snowflake-Labs/dbt_constraints
+    - Snowflake-Labs/dbt_semantic_view
+    github_org: Snowflake-Labs
+    identity_source: 'github-org-website (api.github.com/users/Snowflake-Labs blog: https://developers.snowflake.com/)'
+    builder: provider (package published from the provider's GitHub org)
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+  identity_source: 'github-org-website (api.github.com/users/Snowflake-Labs blog: https://developers.snowflake.com/)'
+- partner_name: Snowplow
+  partner: snowplow
+  partner_match: domain
+  partner_url: https://snowplow.io
+  type: marketplace
+  marketplace: dbt-package-hub
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://hub.getdbt.com/snowplow/snowplow_utils/latest/
+  app: Snowplow
+  category: dbt package
+  contract_reference:
+    register: dbt package hub (hub.getdbt.com/api/v1)
+    spec_file: null
+    role: dbt-package-publisher
+    registered_name: Snowplow
+    matched_domain: snowplow.io
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    packages:
+    - snowplow/snowplow_attribution
+    - snowplow/snowplow_ecommerce
+    - snowplow/snowplow_fractribution
+    - snowplow/snowplow_media_player
+    - snowplow/snowplow_mobile
+    - snowplow/snowplow_normalize
+    - snowplow/snowplow_unified
+    - snowplow/snowplow_utils
+    - snowplow/snowplow_web
+    github_org: snowplow
+    identity_source: 'github-org-website (api.github.com/users/snowplow blog: https://snowplow.io)'
+    builder: provider (package published from the provider's GitHub org)
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+  identity_source: 'github-org-website (api.github.com/users/snowplow blog: https://snowplow.io)'
+- partner_name: Teradata
+  partner: teradata
+  partner_match: domain
+  partner_url: https://teradata.com
+  type: marketplace
+  marketplace: dbt-package-hub
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://hub.getdbt.com/Teradata/teradata_utils/latest/
+  app: Teradata Corporation
+  category: dbt package
+  contract_reference:
+    register: dbt package hub (hub.getdbt.com/api/v1)
+    spec_file: null
+    role: dbt-package-publisher
+    registered_name: Teradata Corporation
+    matched_domain: teradata.com
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    packages:
+    - Teradata/teradata_utils
+    github_org: Teradata
+    identity_source: 'github-org-website (api.github.com/users/Teradata blog: http://developers.teradata.com)'
+    builder: provider (package published from the provider's GitHub org)
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+  identity_source: 'github-org-website (api.github.com/users/Teradata blog: http://developers.teradata.com)'
 source:
 - https://github.com/marketplace?type=actions
 - https://marketplace.visualstudio.com/vscode
