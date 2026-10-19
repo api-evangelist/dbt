@@ -1,0 +1,12 @@
+{
+ "url": "https://semantic-layer.cloud.getdbt.com/api/openapi.json",
+ "final": "https://semantic-layer.cloud.getdbt.com/api/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 1564,
+ "sha256": "8d965e7d11b969bde28010b164fbde69f1e18b9cd67f7128cd734ef9d21252c0",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "re-archived: the provider's current document replaced a stale archive (roadmap#793); the old files are in openapi/_superseded/2026-10-19-stale"
+}

@@ -144,30 +144,6 @@ apis:
     url: graphql/dbt-graphql.md
   - type: Documentation
     url: https://docs.getdbt.com/docs/dbt-cloud-apis/sl-api-overview
-- aid: dbt:dbt-metadata-api
-  name: dbt Metadata API
-  description: The Metadata API from dbt — 1 operation(s) for metadata.
-  humanURL: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
-  baseURL: https://cloud.getdbt.com/api/v3
-  tags:
-  - Metadata
-  properties:
-  - type: OpenAPI
-    url: openapi/dbt-metadata-api-openapi.yml
-  - type: Documentation
-    url: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
-  - type: JSONSchema
-    url: json-schema/dbt-job.json
-  - type: JSONSchema
-    url: json-schema/dbt-run.json
-  - type: Rules
-    url: rules/dbt-cloud-administrative-api-rules.yml
-  - type: Documentation
-    url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
-  - type: GraphQL
-    url: graphql/dbt-graphql.md
-  - type: Documentation
-    url: https://docs.getdbt.com/docs/dbt-cloud-apis/sl-api-overview
 - aid: dbt:dbt-metrics-api
   name: dbt Metrics API
   description: The Metrics API from dbt — 1 operation(s) for metrics.
@@ -228,6 +204,102 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/dbt-runs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  - type: JSONSchema
+    url: json-schema/dbt-job.json
+  - type: JSONSchema
+    url: json-schema/dbt-run.json
+  - type: Rules
+    url: rules/dbt-cloud-administrative-api-rules.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
+  - type: GraphQL
+    url: graphql/dbt-graphql.md
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/sl-api-overview
+- aid: dbt:dbt-fastapi-api
+  name: dbt Fast API
+  description: The FastAPI API from dbt — 1 operation(s) for fastapi.
+  humanURL: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  baseURL: https://cloud.getdbt.com/api/v3
+  tags:
+  - FastAPI
+  properties:
+  - type: OpenAPI
+    url: openapi/dbt-fastapi-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  - type: JSONSchema
+    url: json-schema/dbt-job.json
+  - type: JSONSchema
+    url: json-schema/dbt-run.json
+  - type: Rules
+    url: rules/dbt-cloud-administrative-api-rules.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
+  - type: GraphQL
+    url: graphql/dbt-graphql.md
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/sl-api-overview
+- aid: dbt:dbt-private-api
+  name: dbt Private API
+  description: The Private API from dbt — 1 operation(s) for private.
+  humanURL: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  baseURL: https://cloud.getdbt.com/api/v3
+  tags:
+  - Private
+  properties:
+  - type: OpenAPI
+    url: openapi/dbt-private-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  - type: JSONSchema
+    url: json-schema/dbt-job.json
+  - type: JSONSchema
+    url: json-schema/dbt-run.json
+  - type: Rules
+    url: rules/dbt-cloud-administrative-api-rules.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
+  - type: GraphQL
+    url: graphql/dbt-graphql.md
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/sl-api-overview
+- aid: dbt:dbt-ready-api
+  name: dbt Ready API
+  description: The Ready API from dbt — 1 operation(s) for ready.
+  humanURL: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  baseURL: https://cloud.getdbt.com/api/v3
+  tags:
+  - Ready
+  properties:
+  - type: OpenAPI
+    url: openapi/dbt-ready-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  - type: JSONSchema
+    url: json-schema/dbt-job.json
+  - type: JSONSchema
+    url: json-schema/dbt-run.json
+  - type: Rules
+    url: rules/dbt-cloud-administrative-api-rules.yml
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api
+  - type: GraphQL
+    url: graphql/dbt-graphql.md
+  - type: Documentation
+    url: https://docs.getdbt.com/docs/dbt-cloud-apis/sl-api-overview
+- aid: dbt:dbt-graph-ql-api
+  name: dbt Graph QL API
+  description: The Graph QL API from dbt — 1 operation(s) for graph ql.
+  humanURL: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
+  baseURL: https://cloud.getdbt.com/api/v3
+  tags:
+  - Graph QL
+  properties:
+  - type: OpenAPI
+    url: openapi/dbt-graph-ql-api-openapi.yml
   - type: Documentation
     url: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
   - type: JSONSchema

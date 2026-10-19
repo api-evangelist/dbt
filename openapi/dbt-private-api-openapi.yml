@@ -1,0 +1,32 @@
+openapi: 3.2.0
+info:
+  title: Fast Private API
+  version: 0.1.0
+tags:
+- name: Private
+paths:
+  /private/graphql:
+    get:
+      summary: Handle Http Get
+      operationId: handle_http_get_private_graphql_get
+      responses:
+        '200':
+          description: The GraphiQL integrated development environment.
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found if GraphiQL or query via GET are not enabled.
+      tags:
+      - Private
+    post:
+      summary: Handle Http Post
+      operationId: handle_http_post_private_graphql_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - Private

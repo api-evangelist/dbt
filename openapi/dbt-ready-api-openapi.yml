@@ -1,0 +1,22 @@
+openapi: 3.2.0
+info:
+  title: Fast Ready API
+  version: 0.1.0
+tags:
+- name: Ready
+paths:
+  /___ready:
+    get:
+      summary: Ready
+      description: Used for server health checks.
+      operationId: ready____ready_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: string
+                title: Response Ready    Ready Get
+      tags:
+      - Ready

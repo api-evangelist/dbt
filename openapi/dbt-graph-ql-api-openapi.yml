@@ -1,0 +1,32 @@
+openapi: 3.2.0
+info:
+  title: Fast GraphQL API
+  version: 0.1.0
+tags:
+- name: Graph QL
+paths:
+  /graphql:
+    get:
+      summary: Handle Http Get
+      operationId: handle_http_get_graphql_get
+      responses:
+        '200':
+          description: The GraphiQL integrated development environment.
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found if GraphiQL or query via GET are not enabled.
+      tags:
+      - Graph QL
+    post:
+      summary: Handle Http Post
+      operationId: handle_http_post_graphql_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - Graph QL

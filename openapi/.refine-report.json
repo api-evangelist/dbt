@@ -2,8 +2,8 @@
   "provider": "dbt",
   "sources": [
     "_original/dbt-cloud-administrative-api-openapi.yml",
-    "_original/dbt-cloud-discovery-api-openapi.yml",
-    "_original/dbt-cloud-semantic-layer-api-openapi.yml"
+    "_original/dbt-cloud-semantic-layer-api-openapi.yml",
+    "_original/dbt-openapi.json"
   ],
   "outputs": [
     "dbt-accounts-api-openapi.yml",
@@ -11,8 +11,11 @@
     "dbt-jobs-api-openapi.yml",
     "dbt-projects-api-openapi.yml",
     "dbt-runs-api-openapi.yml",
-    "dbt-metadata-api-openapi.yml",
-    "dbt-metrics-api-openapi.yml"
+    "dbt-metrics-api-openapi.yml",
+    "dbt-fastapi-api-openapi.yml",
+    "dbt-graphql-api-openapi.yml",
+    "dbt-private-api-openapi.yml",
+    "dbt-ready-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
@@ -20,15 +23,24 @@
   "notes": [
     "sourced from openapi/_original/ (3 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "dbt-cloud-administrative-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "dbt-cloud-discovery-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "dbt-cloud-semantic-layer-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "apis.yml register: already-registered"
+    "dbt-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "dbt-openapi.json: tagged paths GET /graphql -> Graphql",
+    "dbt-openapi.json: tagged paths POST /graphql -> Graphql",
+    "dbt-openapi.json: tagged paths GET /private/graphql -> Private",
+    "dbt-openapi.json: tagged paths POST /private/graphql -> Private",
+    "dbt-openapi.json: tagged paths GET / -> FastAPI",
+    "dbt-openapi.json: tagged paths GET /___ready -> Ready",
+    "dbt-openapi.json: declared missing tag: FastAPI",
+    "dbt-openapi.json: declared missing tag: Graphql",
+    "dbt-openapi.json: declared missing tag: Private",
+    "dbt-openapi.json: declared missing tag: Ready",
+    "apis.yml register: written (+4 apis, 10 total)"
   ],
   "skipped": [
     "dbt-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "dbt-environments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "dbt-jobs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "dbt-metadata-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "dbt-metrics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "dbt-projects-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "dbt-runs-api-openapi.yml: previously refined output, superseded by openapi/_original/"
