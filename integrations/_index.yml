@@ -444,19 +444,6 @@
     builder: provider (package published from the provider's GitHub org)
   status: not-a-workflow
   arazzo: null
-- slug: dbt-tableau-own
-  label: Tableau (own)
-  partner: tableau
-  partner_name: Tableau (own)
-  category: connector
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://exchange.tableau.com/products/1020
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
 - slug: dbt-pipedream
   label: Pipedream
   partner: pipedream
@@ -481,5 +468,71 @@
     actions: true
     sources: true
     builder: Pipedream repo (component)
+  status: not-a-workflow
+  arazzo: null
+- slug: dbt-winget-windows-package-manager
+  label: winget (Windows Package Manager)
+  partner_name: winget (Windows Package Manager)
+  category: official CLI (winget (Windows Package Manager))
+  type: register
+  channel: package-registry
+  evidence: https://github.com/microsoft/winget-pkgs/tree/master/manifests/d/dbtLabs/dbt
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: winget (Windows Package Manager) (public package index)
+    spec_file: null
+    packages:
+    - name: dbtLabs.dbt
+      kind: manifest
+      version: 2.0.8
+      released: '2026-10-09'
+      lapsed: false
+      page: https://github.com/microsoft/winget-pkgs/tree/master/manifests/d/dbtLabs/dbt
+      cli: 'winget: The next-generation dbt CLI engine for faster SQL parsing, compilation, and exec'
+      repo_leg: domain:getdbt.com
+      publisher_leg: artifact-domain:getdbt.com
+      matched_by: domain
+    - name: dbtLabs.dbtFusion
+      kind: manifest
+      version: 2.0.0-preview.172
+      released: '2026-04-15'
+      lapsed: false
+      page: https://github.com/microsoft/winget-pkgs/tree/master/manifests/d/dbtLabs/dbtFusion
+      cli: 'winget: The next-generation dbt CLI engine for faster SQL parsing, compilation, and exec'
+      repo_leg: domain:getdbt.com
+      publisher_leg: artifact-domain:getdbt.com
+      matched_by: domain
+    current: true
+    signal_note: 'the provider''s own command-line tool on a package manager: distribution, not an integration;
+      lapsed = no release in 24 months or deprecated / disabled by the manager'
+    detected_by: sweep-official-clis.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
+- slug: dbt-tableau-own
+  label: Tableau (own)
+  partner: tableau
+  partner_name: Tableau (own)
+  category: connector
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://exchange.tableau.com/products/1020
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: dbt-eclipse-foundation-open-vsx
+  label: Eclipse Foundation (open-vsx)
+  partner: eclipse
+  partner_name: Eclipse Foundation (open-vsx)
+  category: IDE / developer extension marketplace listing
+  type: marketplace
+  marketplace: open-vsx
+  channel: partner-built
+  evidence: https://open-vsx.org/namespace/dbtLabsInc
+  source: edge
+  relationship: platform-app
   status: not-a-workflow
   arazzo: null
