@@ -296,6 +296,8 @@ apis:
   humanURL: https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api
   baseURL: https://cloud.getdbt.com/api/v3
   tags:
+  - GraphQL
+  tags_raw:
   - Graph QL
   properties:
   - type: OpenAPI
